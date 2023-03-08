@@ -14,11 +14,13 @@ describe("note adding", () => {
 
     it("user successfully adds a note", async () => {
         render(<KeepApp />, { wrapper: BrowserRouter });
+        const notesTab = screen.getByText("Notes");
+        await userEvent.click(notesTab);
         const composerPlaceholder = screen.getByText("Take a note...");
         await userEvent.click(composerPlaceholder);
         const textarea = screen.getByPlaceholderText("Take a note...");
-        // await userEvent.click(textarea);
         await userEvent.type(textarea, "This is a test note");
+        await userEvent.click(screen.getByText("Close"));
         expect(screen.getByText("This is a test note")).toBeInTheDocument();
     });
 });

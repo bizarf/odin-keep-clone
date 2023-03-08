@@ -12,7 +12,7 @@ const Nav = () => {
     const navigate = useNavigate();
 
     const openNotes = () => {
-        navigate("./notes");
+        navigate("./");
     };
 
     const openReminders = () => {
@@ -30,7 +30,7 @@ const Nav = () => {
     };
 
     return (
-        <div className="bg-red-400 py-2">
+        <div className="py-2">
             <div
                 className="flex items-center rounded-r-3xl py-3 pr-40 pl-4	hover:bg-gray-200"
                 onClick={openNotes}

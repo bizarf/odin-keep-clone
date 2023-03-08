@@ -31,6 +31,7 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
     const closeNote = () => {
         const noteTitle = document.querySelector("#noteTitle")?.value;
         const noteContent = document.querySelector("#noteContent")?.value;
+
         addNote(noteTitle, noteContent, isPinned, false);
         setIsEdit(false);
     };
@@ -38,12 +39,12 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
     return (
         <div className="mx-60 my-8 border-2 border-solid px-4">
             {isEdit ? (
-                <div className="input-group flex flex-col">
-                    <div className="input-group w-auto">
+                <div className="flex flex-col">
+                    <div className="flex">
                         <input
                             type="text"
                             placeholder="Title"
-                            className=" w-auto"
+                            className="flex-1 focus:outline-none"
                             id="noteTitle"
                         />
                         <button
@@ -59,15 +60,18 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
                     </div>
                     <textarea
                         placeholder="Take a note..."
-                        className="textarea w-full max-w-xs"
+                        className="focus:outline-none"
                         id="noteContent"
                     ></textarea>
                     <div className="flex justify-between">
-                        <div className="input-group">
+                        <div>
                             <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
                                 <MdOutlineNotificationAdd className="text-2xl" />
                             </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
+                            <button
+                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black disabled:bg-inherit"
+                                disabled
+                            >
                                 <MdOutlinePersonAddAlt className="text-2xl" />
                             </button>
                             <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
@@ -89,7 +93,7 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
                                 <MdOutlineRedo className="text-2xl" />
                             </button>
                         </div>
-                        <div className="btn-primary btn" onClick={closeNote}>
+                        <div className="btn-ghost btn" onClick={closeNote}>
                             Close
                         </div>
                     </div>
