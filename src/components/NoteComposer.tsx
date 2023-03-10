@@ -21,7 +21,8 @@ type Props = {
         title: string | null | undefined,
         noteContent: string | null | undefined,
         isPinned: boolean,
-        isArchived: boolean
+        isArchived: boolean,
+        isTrash: boolean
     ) => void;
 };
 
@@ -32,7 +33,7 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
         const noteTitle = document.querySelector("#noteTitle")?.value;
         const noteContent = document.querySelector("#noteContent")?.value;
 
-        addNote(noteTitle, noteContent, isPinned, false);
+        addNote(noteTitle, noteContent, isPinned, false, false);
         setIsEdit(false);
     };
 
@@ -69,7 +70,7 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
                                 <MdOutlineNotificationAdd className="text-2xl" />
                             </button>
                             <button
-                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black disabled:bg-inherit"
+                                className="disabled btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black disabled:bg-inherit"
                                 disabled
                             >
                                 <MdOutlinePersonAddAlt className="text-2xl" />

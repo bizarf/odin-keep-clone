@@ -6,6 +6,27 @@ import { BrowserRouter } from "react-router-dom";
 import Nav from "../src/components/Nav";
 import KeepApp from "../src/components/KeepApp";
 
+const user = {
+    accessToken: "1",
+    auth: { object: "object" },
+    displayName: "Test",
+    email: "test@test.com",
+    emailVerified: true,
+    isAnonymous: false,
+    metadata: { object: "object" },
+    phoneNumber: "",
+    photoURL: "",
+    proactiveRefresh: { object: "object" },
+    providerData: [{ object: "object" }],
+    providerId: "1",
+    reloadListener: "",
+    reloadUserInfo: { object: "object" },
+    stsTokenManager: { object: "object" },
+    tenantId: "1",
+    uid: "demo",
+    refreshToken: "1",
+};
+
 describe("Nav tabs render", () => {
     it("Notes tab should be rendered", () => {
         render(<Nav />, { wrapper: BrowserRouter });
@@ -22,7 +43,9 @@ describe("Nav tabs render", () => {
 
 describe("tabs go to their respective pages", () => {
     it("clicking the notes tab opens the notes page", async () => {
-        render(<KeepApp />, { wrapper: BrowserRouter });
+        render(<KeepApp user={user} setUser={undefined} />, {
+            wrapper: BrowserRouter,
+        });
         const composerPlaceholder = screen.getByText("Take a note...");
         await userEvent.click(composerPlaceholder);
         const textarea = screen.getByPlaceholderText("Take a note...");
@@ -36,7 +59,9 @@ describe("tabs go to their respective pages", () => {
     });
 
     it("clicking the trash tab opens the trash page", async () => {
-        render(<KeepApp />, { wrapper: BrowserRouter });
+        render(<KeepApp user={user} setUser={undefined} />, {
+            wrapper: BrowserRouter,
+        });
         const trashEl = screen.getByText("Trash");
         await userEvent.click(trashEl);
         const trashText = screen.getByText(

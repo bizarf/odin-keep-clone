@@ -1,12 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { onAuthStateChanged, getAuth, GoogleAuthProvider } from "firebase/auth";
 import {
     getFirestore,
     doc,
     setDoc,
     getDoc,
     collection,
+    onSnapshot,
 } from "firebase/firestore";
 import { app } from "./firebaseSetup";
 import Header from "./Header";
@@ -45,23 +46,13 @@ const KeepApp = ({ user, setUser }: Props) => {
     const db = getFirestore(app);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        // if user is logged in, then send the data to the user state. if not then send them back to the splash page.
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            } else {
-                navigate("../");
-            }
-        });
-    }, []);
-
     const [notes, setNotes] = useState<
         Array<{
             title: string | null | undefined;
             noteContent: string | null | undefined;
             isPinned: boolean;
             isArchived: boolean;
+            isTrash: boolean;
         }>
     >([]);
 
@@ -69,21 +60,37 @@ const KeepApp = ({ user, setUser }: Props) => {
         title: string | null | undefined,
         noteContent: string | null | undefined,
         isPinned: boolean,
-        isArchived: boolean
+        isArchived: boolean,
+        isTrash: boolean
     ) => {
         const newNote = {
             title: title,
             noteContent: noteContent,
             isPinned: isPinned,
             isArchived: isArchived,
+            isTrash: isTrash,
         };
+        if (title != "" && noteContent != "") {
+            setNotes([...notes, newNote]);
+        }
 
-        setNotes([...notes, newNote]);
+        if (
+            (title === "" && noteContent != "") ||
+            (title != "" && noteContent === "")
+        ) {
+            setNotes([...notes, newNote]);
+        }
     };
 
-    const deleteNote = (index: number) => {
-        const updatedNotes = notes;
-        updatedNotes.splice(index, 1);
+    const moveToTrash = (index: number) => {
+        const updatedNotes = notes.map((note, i) => {
+            if (i === index) {
+                note.isTrash = true;
+                return note;
+            } else {
+                return note;
+            }
+        });
         setNotes([...updatedNotes]);
     };
 
@@ -91,34 +98,60 @@ const KeepApp = ({ user, setUser }: Props) => {
 
     const [isEdit, setIsEdit] = useState(false);
 
-    const fetchUserData = async () => {
-        const docRef = doc(db, "keep-data", `${user?.uid}`);
-        const docSnap = await getDoc(docRef);
+    // firebase stuff
+    useEffect(() => {
+        // if user is logged in, then send the data to the user state. if not then send them back to the splash page.
+        onAuthStateChanged(auth, (googleUser) => {
+            if (googleUser) {
+                setUser(googleUser);
+                // fetchUserData();
+            } else {
+                navigate("../");
+            }
+        });
+    }, []);
 
-        if (docSnap.exists()) {
-            // console.log("Document data:", docSnap.data());
-            // console.log(docSnap.data().notes);
-            setNotes([...docSnap.data().notes]);
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-            // create a new document that uses the user's google uid
-            await setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
-                notes: notes,
-            });
+    const fetchUserData = async () => {
+        if (user) {
+            const docRef = doc(db, "keep-data", `${user?.uid}`);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                // console.log("Document data:", docSnap.data());
+                // console.log(docSnap.data().notes);
+                setNotes([...docSnap.data().notes]);
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+                // create a new document that uses the user's google uid
+                await setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
+                    notes: notes,
+                });
+            }
         }
     };
 
     useEffect(() => {
         console.log(user);
-        fetchUserData();
+        if (user?.uid != "demo") {
+            fetchUserData();
+        }
     }, [user]);
 
     // whenever the notes array is update, we'll write to firestore
     useEffect(() => {
-        setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
-            notes: notes,
-        });
+        const saveDataToFirestore = async () => {
+            await setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
+                notes: notes,
+            });
+        };
+
+        // function will only work if the user is logged in
+        if (user) {
+            if (user.uid != "demo") {
+                saveDataToFirestore().catch(console.error);
+            }
+        }
     }, [notes]);
 
     return (
@@ -134,13 +167,16 @@ const KeepApp = ({ user, setUser }: Props) => {
                             setIsEdit={setIsEdit}
                             notes={notes}
                             addNote={addNote}
-                            deleteNote={deleteNote}
+                            moveToTrash={moveToTrash}
                         />
                     }
                 />
                 <Route path="/reminders" element={<Reminders />} />
                 <Route path="/archive" element={<Archive />} />
-                <Route path="/trash" element={<Trash />} />
+                <Route
+                    path="/trash"
+                    element={<Trash notes={notes} setNotes={setNotes} />}
+                />
             </Routes>
         </div>
     );
