@@ -95,6 +95,7 @@ const KeepApp = ({ user, setUser }: Props) => {
     };
 
     const [gridView, setGridView] = useState(true);
+    const [mainMenuOpen, setMainMenuOpen] = useState(true);
 
     const [isEdit, setIsEdit] = useState(false);
 
@@ -156,8 +157,13 @@ const KeepApp = ({ user, setUser }: Props) => {
 
     return (
         <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
-            <Header gridView={gridView} setGridView={setGridView} user={user} />
-            <Nav />
+            <Header
+                gridView={gridView}
+                setGridView={setGridView}
+                user={user}
+                setMainMenuOpen={setMainMenuOpen}
+            />
+            <Nav mainMenuOpen={mainMenuOpen} />
             <Routes>
                 <Route
                     index

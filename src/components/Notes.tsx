@@ -6,6 +6,8 @@ import {
     MdOutlineImage,
     MdOutlineArchive,
     MdOutlineMoreVert,
+    MdOutlinePushPin,
+    MdPushPin,
 } from "react-icons/md";
 import NoteComposer from "./NoteComposer";
 
@@ -46,8 +48,13 @@ const Notes = ({ isEdit, setIsEdit, notes, addNote, moveToTrash }: Props) => {
                                 key={index}
                                 className="m-2 h-max w-60 border-2 border-solid"
                             >
-                                <div className="whitespace-pre-wrap p-3">
-                                    <div>{note.title}</div>
+                                <div className="whitespace-pre-wrap break-all p-3">
+                                    <div className="btn-sm btn-circle btn float-right hover:bg-slate-200">
+                                        <MdOutlinePushPin className="text-lg" />
+                                    </div>
+                                    <div className="font-semibold">
+                                        {note.title}
+                                    </div>
                                     <div>{note.noteContent}</div>
                                 </div>
                                 <div className="flex justify-evenly">
@@ -78,31 +85,40 @@ const Notes = ({ isEdit, setIsEdit, notes, addNote, moveToTrash }: Props) => {
                                         </label>
                                         <ul
                                             tabIndex={0}
-                                            className="dropdown-content menu w-52 bg-base-100 p-2 shadow"
+                                            className="dropdown-content menu w-max bg-base-100 py-2 shadow-lg"
                                         >
-                                            <li>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
                                                 <button
                                                     onClick={() =>
                                                         moveToTrash(index)
                                                     }
+                                                    className="text-sm"
                                                 >
                                                     Delete note
                                                 </button>
                                             </li>
-                                            <li>
-                                                <button>Add label</button>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
+                                                <button className="text-sm">
+                                                    Add label
+                                                </button>
                                             </li>
-                                            <li>
-                                                <button>Add drawing</button>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
+                                                <button className="text-sm">
+                                                    Add drawing
+                                                </button>
                                             </li>
-                                            <li>
-                                                <button>Make a copy</button>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
+                                                <button className="text-sm">
+                                                    Make a copy
+                                                </button>
                                             </li>
-                                            <li>
-                                                <button>Show checkboxes</button>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
+                                                <button className="text-sm">
+                                                    Show checkboxes
+                                                </button>
                                             </li>
-                                            <li>
-                                                <button>
+                                            <li className="py-1 px-4 hover:bg-gray-200">
+                                                <button className="text-sm">
                                                     Copy to Google Docs
                                                 </button>
                                             </li>

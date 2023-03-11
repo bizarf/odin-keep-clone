@@ -65,36 +65,79 @@ const NoteComposer = ({ isEdit, setIsEdit, addNote }: Props) => {
                         id="noteContent"
                     ></textarea>
                     <div className="flex justify-between">
-                        <div>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineNotificationAdd className="text-2xl" />
-                            </button>
-                            <button
-                                className="disabled btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black disabled:bg-inherit"
-                                disabled
+                        <div className="flex w-4/6 justify-between">
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Remind me"
                             >
-                                <MdOutlinePersonAddAlt className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlinePalette className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineImage className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineArchive className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineMoreVert className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineUndo className="text-2xl" />
-                            </button>
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineRedo className="text-2xl" />
-                            </button>
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineNotificationAdd className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Collaborator"
+                            >
+                                <button
+                                    className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black"
+                                    disabled
+                                >
+                                    <MdOutlinePersonAddAlt className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Background options"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlinePalette className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Add image"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineImage className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Archive"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineArchive className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="More"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineMoreVert className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Undo"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineUndo className="text-lg" />
+                                </button>
+                            </div>
+                            <div
+                                className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                data-tip="Redo"
+                            >
+                                <button className="btn-sm btn-circle btn text-slate-500 hover:bg-slate-200 hover:text-black">
+                                    <MdOutlineRedo className="text-lg" />
+                                </button>
+                            </div>
                         </div>
-                        <div className="btn-ghost btn" onClick={closeNote}>
+                        <div
+                            className="btn-sm btn px-6 hover:bg-slate-100"
+                            onClick={closeNote}
+                        >
                             Close
                         </div>
                     </div>

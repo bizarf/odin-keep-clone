@@ -33,19 +33,27 @@ type Props = {
         uid: string;
         refreshToken: string;
     } | null;
+    setMainMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header = ({ gridView, setGridView, user }: Props) => {
+const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
     const location = useLocation();
 
     const toggleNoteLayout = () => {
         setGridView((view) => !view);
     };
 
+    const toggleMainMenuView = () => {
+        setMainMenuOpen((setting) => !setting);
+    };
+
     return (
-        <div className="col-span-full flex items-center justify-between px-4 shadow-[0_1px_0_1px_rgba(241,245,249,1)]">
-            <div className="flex items-center">
-                <button className="btn-circle btn border-none bg-inherit text-slate-600 hover:bg-slate-100 hover:text-black ">
+        <div className="col-span-full flex items-center justify-between shadow-[0_1px_0_1px_rgba(241,245,249,1)]">
+            <div className="flex items-center pl-3">
+                <button
+                    className="btn-circle btn border-none bg-inherit text-slate-600 hover:bg-slate-100 hover:text-black"
+                    onClick={toggleMainMenuView}
+                >
                     <MdMenu className="text-2xl" />
                 </button>
                 {location.pathname === "/keep/notes" && (
@@ -102,7 +110,7 @@ const Header = ({ gridView, setGridView, user }: Props) => {
                         <MdOutlineSettings className="rounded-2xl text-2xl hover:bg-gray-200" />
                     </button>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center pr-4">
                     <button className="btn-sm btn-circle avatar btn hover:bg-slate-100">
                         <div className="rounded-full">
                             <img src={user?.photoURL} alt="user avatar" />

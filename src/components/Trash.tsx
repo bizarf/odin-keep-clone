@@ -64,7 +64,7 @@ const Trash = ({ notes, setNotes }: Props) => {
                                 </div>
                                 <div>
                                     <div
-                                        className="tooltip tooltip-bottom"
+                                        className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
                                         data-tip="Delete forever"
                                     >
                                         <button
@@ -75,7 +75,7 @@ const Trash = ({ notes, setNotes }: Props) => {
                                         </button>
                                     </div>
                                     <div
-                                        className="tooltip tooltip-bottom"
+                                        className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
                                         data-tip="Restore"
                                     >
                                         <button
