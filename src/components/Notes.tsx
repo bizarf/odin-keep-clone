@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     MdOutlineNotificationAdd,
     MdOutlinePersonAddAlt,
@@ -10,10 +10,11 @@ import {
     MdPushPin,
 } from "react-icons/md";
 import NoteComposer from "./NoteComposer";
+import NoteEditor from "./NoteEditor";
 
 type Props = {
-    isEdit: boolean;
-    setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+    noteComposerOpen: boolean;
+    setNoteComposerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     notes: {
         title: string | null | undefined;
         noteContent: string | null | undefined;
@@ -21,6 +22,17 @@ type Props = {
         isArchived: boolean;
         isTrash: boolean;
     }[];
+    setNotes: React.Dispatch<
+        React.SetStateAction<
+            Array<{
+                title: string | null | undefined;
+                noteContent: string | null | undefined;
+                isPinned: boolean;
+                isArchived: boolean;
+                isTrash: boolean;
+            }>
+        >
+    >;
     addNote: (
         title: string | null | undefined,
         noteContent: string | null | undefined,
@@ -29,15 +41,34 @@ type Props = {
         isTrash: boolean
     ) => void;
     moveToTrash: (index: number) => void;
-    // deleteNote: (index: number) => void;
+    editNote: boolean;
+    setEditNote: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Notes = ({ isEdit, setIsEdit, notes, addNote, moveToTrash }: Props) => {
+const Notes = ({
+    noteComposerOpen,
+    setNoteComposerOpen,
+    notes,
+    setNotes,
+    addNote,
+    moveToTrash,
+    editNote,
+    setEditNote,
+}: Props) => {
+    const [currentNote, setCurrentNote] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const editNoteBtn = (note: object, index: number) => {
+        setCurrentNote(note);
+        setCurrentIndex(index);
+        setEditNote((state) => !state);
+    };
+
     return (
         <div>
             <NoteComposer
-                isEdit={isEdit}
-                setIsEdit={setIsEdit}
+                noteComposerOpen={noteComposerOpen}
+                setNoteComposerOpen={setNoteComposerOpen}
                 addNote={addNote}
             />
             <div className="flex flex-wrap">
@@ -48,14 +79,39 @@ const Notes = ({ isEdit, setIsEdit, notes, addNote, moveToTrash }: Props) => {
                                 key={index}
                                 className="m-2 h-max w-60 border-2 border-solid"
                             >
-                                <div className="whitespace-pre-wrap break-all p-3">
-                                    <div className="btn-sm btn-circle btn float-right hover:bg-slate-200">
+                                <div
+                                    className="tooltip tooltip-bottom float-right [--tooltip-tail:0px] before:text-xs"
+                                    data-tip="Pin note"
+                                >
+                                    <button
+                                        className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black"
+                                        onClick={() => console.log("pin")}
+                                    >
                                         <MdOutlinePushPin className="text-lg" />
-                                    </div>
+                                    </button>
+                                </div>
+                                <div
+                                    className="cursor-pointer whitespace-pre-wrap break-all p-3"
+                                    onClick={() =>
+                                        // setEditNote((state) => !state)
+                                        editNoteBtn(note, index)
+                                    }
+                                >
                                     <div className="font-semibold">
                                         {note.title}
                                     </div>
                                     <div>{note.noteContent}</div>
+                                </div>
+                                <div>
+                                    <NoteEditor
+                                        currentNote={currentNote}
+                                        currentIndex={currentIndex}
+                                        setCurrentNote={setCurrentNote}
+                                        editNote={editNote}
+                                        setEditNote={setEditNote}
+                                        notes={notes}
+                                        setNotes={setNotes}
+                                    />
                                 </div>
                                 <div className="flex justify-evenly">
                                     <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black ">
@@ -85,42 +141,42 @@ const Notes = ({ isEdit, setIsEdit, notes, addNote, moveToTrash }: Props) => {
                                         </label>
                                         <ul
                                             tabIndex={0}
-                                            className="dropdown-content menu w-max bg-base-100 py-2 shadow-lg"
+                                            className="dropdown-content w-max bg-base-100 py-2 shadow-lg"
                                         >
-                                            <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button
-                                                    onClick={() =>
-                                                        moveToTrash(index)
-                                                    }
-                                                    className="text-sm"
-                                                >
+                                            <li
+                                                className="cursor-pointer py-1 px-4 hover:bg-gray-200"
+                                                onClick={() =>
+                                                    moveToTrash(index)
+                                                }
+                                            >
+                                                <div className="text-sm">
                                                     Delete note
-                                                </button>
+                                                </div>
                                             </li>
                                             <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button className="text-sm">
+                                                <div className="text-sm">
                                                     Add label
-                                                </button>
+                                                </div>
                                             </li>
                                             <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button className="text-sm">
+                                                <div className="text-sm">
                                                     Add drawing
-                                                </button>
+                                                </div>
                                             </li>
                                             <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button className="text-sm">
+                                                <div className="text-sm">
                                                     Make a copy
-                                                </button>
+                                                </div>
                                             </li>
                                             <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button className="text-sm">
+                                                <div className="text-sm">
                                                     Show checkboxes
-                                                </button>
+                                                </div>
                                             </li>
                                             <li className="py-1 px-4 hover:bg-gray-200">
-                                                <button className="text-sm">
+                                                <div className="text-sm">
                                                     Copy to Google Docs
-                                                </button>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>

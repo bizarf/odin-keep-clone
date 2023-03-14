@@ -16,6 +16,7 @@ import Notes from "./Notes";
 import Reminders from "./Reminders";
 import Archive from "./Archive";
 import Trash from "./Trash";
+import NoteEditor from "./NoteEditor";
 
 type Props = {
     user: {
@@ -97,7 +98,8 @@ const KeepApp = ({ user, setUser }: Props) => {
     const [gridView, setGridView] = useState(true);
     const [mainMenuOpen, setMainMenuOpen] = useState(true);
 
-    const [isEdit, setIsEdit] = useState(false);
+    const [noteComposerOpen, setNoteComposerOpen] = useState(false);
+    const [editNote, setEditNote] = useState(false);
 
     // firebase stuff
     useEffect(() => {
@@ -105,7 +107,7 @@ const KeepApp = ({ user, setUser }: Props) => {
         onAuthStateChanged(auth, (googleUser) => {
             if (googleUser) {
                 setUser(googleUser);
-                // fetchUserData();
+                fetchUserData();
             } else {
                 navigate("../");
             }
@@ -169,11 +171,14 @@ const KeepApp = ({ user, setUser }: Props) => {
                     index
                     element={
                         <Notes
-                            isEdit={isEdit}
-                            setIsEdit={setIsEdit}
+                            noteComposerOpen={noteComposerOpen}
+                            setNoteComposerOpen={setNoteComposerOpen}
                             notes={notes}
+                            setNotes={setNotes}
                             addNote={addNote}
                             moveToTrash={moveToTrash}
+                            editNote={editNote}
+                            setEditNote={setEditNote}
                         />
                     }
                 />
@@ -183,6 +188,7 @@ const KeepApp = ({ user, setUser }: Props) => {
                     path="/trash"
                     element={<Trash notes={notes} setNotes={setNotes} />}
                 />
+                <Route path="/noteEditor" element={<NoteEditor />} />
             </Routes>
         </div>
     );
