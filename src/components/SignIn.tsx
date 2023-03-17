@@ -5,7 +5,6 @@ import {
     GoogleAuthProvider,
     signInWithRedirect,
     onAuthStateChanged,
-    getRedirectResult,
 } from "firebase/auth";
 import { app } from "./firebaseSetup";
 
@@ -28,14 +27,8 @@ const SignIn = () => {
     };
 
     useEffect(() => {
-        //  we use this function to check if the user has logged in after the sign in redirect. if they haven't then we run the google sign in redirect function, otherwise we send the user into the keep app page
-        getRedirectResult(auth).then((result) => {
-            if (result) {
-                navigate("/keep/");
-            } else {
-                googleSignInRedirect();
-            }
-        });
+        // on render, run the google sign in redirect function. this is necessary as after the redirect, this page will re-render again.
+        googleSignInRedirect();
     }, []);
 
     return null;

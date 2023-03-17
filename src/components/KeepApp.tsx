@@ -1,13 +1,12 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { onAuthStateChanged, getAuth, GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 import {
     getFirestore,
     doc,
     setDoc,
     getDoc,
     collection,
-    onSnapshot,
 } from "firebase/firestore";
 import { app } from "./firebaseSetup";
 import Header from "./Header";
@@ -17,29 +16,11 @@ import Reminders from "./Reminders";
 import Archive from "./Archive";
 import Trash from "./Trash";
 import NoteEditor from "./NoteEditor";
+import { User } from "../App";
 
 type Props = {
-    user: {
-        accessToken: string;
-        auth: object;
-        displayName: string;
-        email: string;
-        emailVerified: boolean;
-        isAnonymous: boolean;
-        metadata: object;
-        phoneNumber: unknown;
-        photoURL: string;
-        proactiveRefresh: object;
-        providerData: Array<object>;
-        providerId: string;
-        reloadListener: unknown;
-        reloadUserInfo: object;
-        stsTokenManager: object;
-        tenantId: unknown;
-        uid: string;
-        refreshToken: string;
-    } | null;
-    setUser: React.Dispatch<React.SetStateAction<object>>;
+    user: User | null;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 const KeepApp = ({ user, setUser }: Props) => {
@@ -49,8 +30,8 @@ const KeepApp = ({ user, setUser }: Props) => {
 
     const [notes, setNotes] = useState<
         Array<{
-            title: string | null | undefined;
-            noteContent: string | null | undefined;
+            title: string | undefined;
+            noteContent: string | undefined;
             isPinned: boolean;
             isArchived: boolean;
             isTrash: boolean;
@@ -58,8 +39,8 @@ const KeepApp = ({ user, setUser }: Props) => {
     >([]);
 
     const addNote = (
-        title: string | null | undefined,
-        noteContent: string | null | undefined,
+        title: string | undefined,
+        noteContent: string | undefined,
         isPinned: boolean,
         isArchived: boolean,
         isTrash: boolean
@@ -95,23 +76,67 @@ const KeepApp = ({ user, setUser }: Props) => {
         setNotes([...updatedNotes]);
     };
 
-    const [gridView, setGridView] = useState(true);
-    const [mainMenuOpen, setMainMenuOpen] = useState(true);
+    const pinNote = (index: number, pin: boolean) => {
+        const updatedNotes = notes.map((note, i) => {
+            if (i === index && !pin) {
+                note.isPinned = true;
+                return note;
+            } else if (i === index && pin) {
+                note.isPinned = false;
+                return note;
+            } else {
+                return note;
+            }
+        });
+        setNotes([...updatedNotes]);
+    };
 
+    const [gridView, setGridView] = useState(true);
+
+    const [mainMenuOpen, setMainMenuOpen] = useState(true);
     const [noteComposerOpen, setNoteComposerOpen] = useState(false);
     const [editNote, setEditNote] = useState(false);
+
+    const [currentNote, setCurrentNote] = useState<
+        | {
+              title: string | undefined;
+              noteContent: string | undefined;
+              isPinned: boolean;
+              isArchived: boolean;
+              isTrash: boolean;
+          }
+        | undefined
+    >();
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const editNoteBtn = (
+        note: {
+            title: string | undefined;
+            noteContent: string | undefined;
+            isPinned: boolean;
+            isArchived: boolean;
+            isTrash: boolean;
+        },
+        index: number
+    ) => {
+        setCurrentNote(note);
+        setCurrentIndex(index);
+        setEditNote((state) => !state);
+    };
 
     // firebase stuff
     useEffect(() => {
         // if user is logged in, then send the data to the user state. if not then send them back to the splash page.
-        onAuthStateChanged(auth, (googleUser) => {
-            if (googleUser) {
-                setUser(googleUser);
-                fetchUserData();
-            } else {
-                navigate("../");
-            }
-        });
+        if (user?.uid != "demo" && user === null) {
+            onAuthStateChanged(auth, (googleUser) => {
+                if (googleUser) {
+                    setUser(googleUser);
+                    // fetchUserData();
+                } else {
+                    navigate("../");
+                }
+            });
+        }
     }, []);
 
     const fetchUserData = async () => {
@@ -136,6 +161,7 @@ const KeepApp = ({ user, setUser }: Props) => {
 
     useEffect(() => {
         console.log(user);
+        // as soon as the user state is changed, we'll fetch firestore data
         if (user?.uid != "demo") {
             fetchUserData();
         }
@@ -150,7 +176,8 @@ const KeepApp = ({ user, setUser }: Props) => {
         };
 
         // function will only work if the user is logged in
-        if (user) {
+        if (user != null) {
+            // I'm not allowing the demo data to be stored on firestore
             if (user.uid != "demo") {
                 saveDataToFirestore().catch(console.error);
             }
@@ -179,6 +206,13 @@ const KeepApp = ({ user, setUser }: Props) => {
                             moveToTrash={moveToTrash}
                             editNote={editNote}
                             setEditNote={setEditNote}
+                            currentNote={currentNote}
+                            setCurrentNote={setCurrentNote}
+                            currentIndex={currentIndex}
+                            setCurrentIndex={setCurrentIndex}
+                            editNoteBtn={editNoteBtn}
+                            gridView={gridView}
+                            pinNote={pinNote}
                         />
                     }
                 />
@@ -188,7 +222,20 @@ const KeepApp = ({ user, setUser }: Props) => {
                     path="/trash"
                     element={<Trash notes={notes} setNotes={setNotes} />}
                 />
-                <Route path="/noteEditor" element={<NoteEditor />} />
+                <Route
+                    path="/noteEditor"
+                    element={
+                        <NoteEditor
+                            currentNote={currentNote}
+                            currentIndex={currentIndex}
+                            setCurrentNote={setCurrentNote}
+                            editNote={editNote}
+                            setEditNote={setEditNote}
+                            notes={notes}
+                            setNotes={setNotes}
+                        />
+                    }
+                />
             </Routes>
         </div>
     );

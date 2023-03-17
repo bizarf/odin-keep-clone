@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { useState } from "react";
+import React from "react";
 import { describe, expect, it } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import Nav from "../src/components/Nav";
@@ -29,13 +29,13 @@ const user = {
 
 describe("Nav tabs render", () => {
     it("Notes tab should be rendered", () => {
-        render(<Nav />, { wrapper: BrowserRouter });
+        render(<Nav mainMenuOpen={true} />, { wrapper: BrowserRouter });
         const noteEl = screen.getByText("Notes");
         expect(noteEl).toBeInTheDocument();
     });
 
     it("Reminders tab should be rendered", () => {
-        render(<Nav />, { wrapper: BrowserRouter });
+        render(<Nav mainMenuOpen={true} />, { wrapper: BrowserRouter });
         const remindersEl = screen.getByText("Reminders");
         expect(remindersEl).toBeInTheDocument();
     });

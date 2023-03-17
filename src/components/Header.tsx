@@ -1,8 +1,7 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import {
     MdMenu,
-    MdLibraryBooks,
     MdRefresh,
     MdOutlineViewAgenda,
     MdGridView,
@@ -10,30 +9,12 @@ import {
     MdOutlineSearch,
     MdTask,
 } from "react-icons/md";
+import { User } from "../App";
 
 type Props = {
     gridView: boolean;
     setGridView: React.Dispatch<React.SetStateAction<boolean>>;
-    user: {
-        accessToken: string;
-        auth: object;
-        displayName: string;
-        email: string;
-        emailVerified: boolean;
-        isAnonymous: boolean;
-        metadata: object;
-        phoneNumber: unknown;
-        photoURL: string;
-        proactiveRefresh: object;
-        providerData: Array<object>;
-        providerId: string;
-        reloadListener: unknown;
-        reloadUserInfo: object;
-        stsTokenManager: object;
-        tenantId: unknown;
-        uid: string;
-        refreshToken: string;
-    } | null;
+    user: User | null;
     setMainMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -52,8 +33,6 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
         <div className="col-span-full flex items-center justify-between shadow-[0_1px_0_1px_rgba(241,245,249,1)]">
             <div className="flex items-center pl-3">
                 <div
-                    // className="tooltip tooltip-bottom before:text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
-                    // data-tip="Main menu"
                     className="tooltip tooltip-bottom [--tooltip-tail:0px] before:left-3/4 before:text-xs"
                     data-tip="Main menu"
                 >
@@ -111,8 +90,11 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="List view"
                         >
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black">
-                                <span onClick={toggleNoteLayout}>
+                            <button
+                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                                onClick={toggleNoteLayout}
+                            >
+                                <span>
                                     <MdOutlineViewAgenda className="rounded-2xl text-2xl hover:bg-gray-200" />
                                 </span>
                             </button>
@@ -122,8 +104,11 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Grid view"
                         >
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black">
-                                <span onClick={toggleNoteLayout}>
+                            <button
+                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                                onClick={toggleNoteLayout}
+                            >
+                                <span>
                                     <MdGridView className="rounded-2xl text-2xl hover:bg-gray-200" />
                                 </span>
                             </button>
@@ -140,7 +125,6 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                 </div>
                 <div className="flex items-center pr-4">
                     <div
-                        // className="tooltip whitespace-pre-line text-xs before:bottom-auto before:left-auto before:-right-20 before:top-[var(--tooltip-offset)] before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
                         className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
                         data-tip={`Google account
                         ${user?.displayName}
@@ -148,7 +132,11 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                     >
                         <button className="btn-sm btn-circle avatar btn hover:bg-slate-100">
                             <div className="rounded-full">
-                                <img src={user?.photoURL} alt="user avatar" />
+                                <img
+                                    src={user?.photoURL}
+                                    alt="user avatar"
+                                    referrerPolicy="no-referrer"
+                                />
                             </div>
                         </button>
                     </div>

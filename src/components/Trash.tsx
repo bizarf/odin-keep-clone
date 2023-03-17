@@ -7,8 +7,8 @@ import {
 
 type Props = {
     notes: {
-        title: string | null | undefined;
-        noteContent: string | null | undefined;
+        title: string | undefined;
+        noteContent: string | undefined;
         isPinned: boolean;
         isArchived: boolean;
         isTrash: boolean;
@@ -16,8 +16,8 @@ type Props = {
     setNotes: React.Dispatch<
         React.SetStateAction<
             {
-                title: string | null | undefined;
-                noteContent: string | null | undefined;
+                title: string | undefined;
+                noteContent: string | undefined;
                 isPinned: boolean;
                 isArchived: boolean;
                 isTrash: boolean;
@@ -93,9 +93,6 @@ const Trash = ({ notes, setNotes }: Props) => {
 
             {notes.every(({ isTrash }) => !isTrash) && (
                 <div key={"empty"} className="h-full">
-                    {/* <div className="flex justify-center pt-6 italic">
-                        Notes in Trash are deleted after 7 days.
-                    </div> */}
                     <div className="flex h-3/4 flex-col items-center justify-center">
                         <div>
                             <MdOutlineDelete className="text-9xl text-slate-200" />

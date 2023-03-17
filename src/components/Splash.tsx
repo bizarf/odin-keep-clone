@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-// import { googleSignOut } from "./google_auth";
 import { app } from "./firebaseSetup";
 
 const Splash = () => {

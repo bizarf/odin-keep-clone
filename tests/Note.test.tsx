@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { describe, expect, it } from "vitest";
@@ -57,7 +57,7 @@ describe("note adding", () => {
         const composerPlaceholder = screen.getByText("Take a note...");
         await userEvent.click(composerPlaceholder);
         await userEvent.click(screen.getByText("Close"));
-        // expect(<KeepApp user={user} setUser={undefined} />).toMatchSnapshot();
+        expect(<KeepApp user={user} setUser={undefined} />).toMatchSnapshot();
     });
 
     it("the note will be posted if the title has text, but the textcontent is empty", async () => {
@@ -85,3 +85,27 @@ describe("note adding", () => {
         expect(screen.getByText("This is a test note")).toBeInTheDocument();
     });
 });
+
+// describe("note editing", () => {
+//     it("user edits the title of a note", async () => {
+//         render(<KeepApp user={user} setUser={undefined} />, {
+//             wrapper: BrowserRouter,
+//         });
+//         const composerPlaceholder = screen.getByText("Take a note...");
+//         await userEvent.click(composerPlaceholder);
+//         const titlePlaceholder = screen.getByPlaceholderText("Title");
+//         await userEvent.click(titlePlaceholder);
+//         await userEvent.type(titlePlaceholder, "This is a test title");
+//         await userEvent.click(screen.getByText("Close"));
+//         await userEvent.click(screen.getByText("This is a test title"));
+//         await userEvent.click(screen.getByText("This is a test title"));
+//         await userEvent.type(
+//             screen.getByText("This is a test title"),
+//             " edited"
+//         );
+//         await userEvent.click(screen.getByText("Close"));
+//         expect(
+//             screen.getByText("This is a test title edited")
+//         ).toBeInTheDocument();
+//     });
+// });

@@ -1,7 +1,7 @@
-import { React, useState } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import {
-    MdOutlineCheckBox,
-    MdOutlineBrush,
+    // MdOutlineCheckBox,
+    // MdOutlineBrush,
     MdOutlineImage,
     MdPushPin,
     MdOutlinePushPin,
@@ -15,23 +15,35 @@ import {
 } from "react-icons/md";
 
 type Props = {
-    // isPinned: boolean;
     editNote: boolean;
     setEditNote: React.Dispatch<React.SetStateAction<boolean>>;
-    currentNote: {
-        title: string | null | undefined;
-        noteContent: string | null | undefined;
-        isPinned: boolean;
-        isArchived: boolean;
-        isTrash: boolean;
-    };
+    currentNote:
+        | {
+              title: string | undefined;
+              noteContent: string | undefined;
+              isPinned: boolean;
+              isArchived: boolean;
+              isTrash: boolean;
+          }
+        | undefined;
     currentIndex: number;
-    setCurrentNote: React.Dispatch<React.SetStateAction<object>>;
+    setCurrentNote: React.Dispatch<
+        React.SetStateAction<
+            | {
+                  title: string | undefined;
+                  noteContent: string | undefined;
+                  isPinned: boolean;
+                  isArchived: boolean;
+                  isTrash: boolean;
+              }
+            | undefined
+        >
+    >;
     setNotes: React.Dispatch<
         React.SetStateAction<
             Array<{
-                title: string | null | undefined;
-                noteContent: string | null | undefined;
+                title: string | undefined;
+                noteContent: string | undefined;
                 isPinned: boolean;
                 isArchived: boolean;
                 isTrash: boolean;
@@ -39,15 +51,14 @@ type Props = {
         >
     >;
     notes: {
-        title: string | null | undefined;
-        noteContent: string | null | undefined;
+        title: string | undefined;
+        noteContent: string | undefined;
         isPinned: boolean;
         isArchived: boolean;
         isTrash: boolean;
     }[];
 };
 
-// const NoteEditor = ({ isPinned }: Props) => {
 const NoteEditor = ({
     editNote,
     setEditNote,
@@ -57,49 +68,60 @@ const NoteEditor = ({
     setNotes,
     notes,
 }: Props) => {
-    const isPinned = false;
-
-    const editTitle = (e: object) => {
-        setCurrentNote({ ...currentNote, title: e.target.value });
+    const editTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        if (currentNote) {
+            setCurrentNote({ ...currentNote, title: e.target?.value });
+        }
     };
 
-    const editNoteContent = (e: object) => {
-        setCurrentNote({ ...currentNote, noteContent: e.target.value });
+    const editNoteContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        if (currentNote) {
+            setCurrentNote({
+                ...currentNote,
+                noteContent: e.target?.value,
+            });
+        }
     };
 
     const closeEdit = () => {
         const updatedNotes = notes.map((note, i) => {
             if (i === currentIndex) {
-                note.title = currentNote.title;
-                note.noteContent = currentNote.noteContent;
+                note.title = currentNote?.title;
+                note.noteContent = currentNote?.noteContent;
                 return note;
             } else {
                 return note;
             }
         });
         setNotes([...updatedNotes]);
-        setEditNote(false);
+        setEditNote((state) => !state);
     };
 
-    const textareaAutoHeight = () => {
-        const noteContent = document.querySelector("#noteContentEdit");
-        noteContent.style.height = "";
-        noteContent.style.height =
-            Math.min(noteContent?.scrollHeight, 300) + "px";
-    };
+    // const textareaAutoHeight = () => {
+    //     const noteContent = document.querySelector("#noteContentEdit");
+    //     noteContent.style.height = "";
+    //     noteContent.style.height =
+    //         Math.min(noteContent?.scrollHeight, 300) + "px";
+    // };
 
     if (!editNote) return null;
 
     return (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="flex w-2/5 flex-col bg-white p-2">
+        <div
+            className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-20"
+            onClick={closeEdit}
+        >
+            <div
+                className="flex w-2/5 flex-col rounded-lg bg-white p-2"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className="flex">
                     <input
                         type="text"
                         placeholder="Title"
                         className="flex-1 focus:outline-none"
                         id="noteTitleEdit"
-                        value={currentNote.title}
+                        value={currentNote?.title}
                         onChange={editTitle}
                     />
                     <div
@@ -110,7 +132,7 @@ const NoteEditor = ({
                             className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
                             id="pinBtn"
                         >
-                            {isPinned ? (
+                            {currentNote?.isPinned ? (
                                 <MdPushPin className="text-2xl" />
                             ) : (
                                 <MdOutlinePushPin className="text-2xl" />
@@ -122,8 +144,8 @@ const NoteEditor = ({
                     placeholder="Take a note..."
                     className=" h-auto resize-none overflow-visible focus:outline-none"
                     id="noteContentEdit"
-                    onInput={textareaAutoHeight}
-                    value={currentNote.noteContent}
+                    // onInput={textareaAutoHeight}
+                    value={currentNote?.noteContent}
                     onChange={editNoteContent}
                 ></textarea>
                 <div className="flex justify-between">

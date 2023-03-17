@@ -34,10 +34,6 @@ const Nav = ({ mainMenuOpen }: Props) => {
         navigate("./trash");
     };
 
-    const openTest = () => {
-        navigate("./noteEditor");
-    };
-
     useEffect(() => {
         const noteNavLong = document.querySelector("#noteNavLong");
         const remindersNavLong = document.querySelector("#remindersNavLong");
@@ -164,14 +160,6 @@ const Nav = ({ mainMenuOpen }: Props) => {
                         <MdOutlineDelete className="text-2xl" />
                         <span className="pl-5">Trash</span>
                     </div>
-                    <div
-                        className="flex cursor-pointer items-center rounded-r-3xl py-3 pr-24 pl-6"
-                        onClick={openTest}
-                        id="trashNavLong"
-                    >
-                        <MdOutlineDelete className="text-2xl" />
-                        <span className="pl-5">Note editor test</span>
-                    </div>
                 </div>
             ) : (
                 <div>
@@ -183,7 +171,6 @@ const Nav = ({ mainMenuOpen }: Props) => {
                         >
                             <MdLightbulbOutline className="text-2xl" />
                         </div>
-                        {/* )} */}
                     </div>
                     <div className="pl-3">
                         <div

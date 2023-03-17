@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import {
     MdOutlineCheckBox,
     MdOutlineBrush,
@@ -16,10 +16,10 @@ import {
 
 type Props = {
     noteComposerOpen: boolean;
-    setNoteComposerOpen: React.dispatch<React.SetStateAction<boolean>>;
+    setNoteComposerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     addNote: (
-        title: string | null | undefined,
-        noteContent: string | null | undefined,
+        title: string | undefined,
+        noteContent: string | undefined,
         isPinned: boolean,
         isArchived: boolean,
         isTrash: boolean
@@ -34,11 +34,16 @@ const NoteComposer = ({
     const [isPinned, setIsPinned] = useState(false);
 
     const closeNote = () => {
-        const noteTitle = document.querySelector("#noteTitle")?.value;
-        const noteContent = document.querySelector("#noteContent")?.value;
+        const noteTitle =
+            document.querySelector<HTMLInputElement>("#noteTitle")?.value;
+        const noteContent =
+            document.querySelector<HTMLTextAreaElement>("#noteContent")?.value;
 
         addNote(noteTitle, noteContent, isPinned, false, false);
-        setNoteComposerOpen(false);
+        if (isPinned) {
+            setIsPinned((state) => !state);
+        }
+        setNoteComposerOpen((state) => !state);
     };
 
     return (
@@ -55,6 +60,7 @@ const NoteComposer = ({
                         <button
                             className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
                             id="pinBtn"
+                            onClick={() => setIsPinned((state) => !state)}
                         >
                             {isPinned ? (
                                 <MdPushPin className="text-2xl" />
@@ -155,15 +161,30 @@ const NoteComposer = ({
                         Take a note...
                     </div>
                     <div className="flex">
-                        <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                            <MdOutlineCheckBox className="text-2xl" />
-                        </button>
-                        <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                            <MdOutlineBrush className="text-2xl" />
-                        </button>
-                        <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                            <MdOutlineImage className="text-2xl" />
-                        </button>
+                        <div
+                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                            data-tip="New list"
+                        >
+                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
+                                <MdOutlineCheckBox className="text-2xl" />
+                            </button>
+                        </div>
+                        <div
+                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                            data-tip="New note with drawing"
+                        >
+                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
+                                <MdOutlineBrush className="text-2xl" />
+                            </button>
+                        </div>
+                        <div
+                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                            data-tip="New note with image"
+                        >
+                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
+                                <MdOutlineImage className="text-2xl" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

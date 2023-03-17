@@ -1,3 +1,42 @@
 // Vitest Snapshot v1
 
-exports[`note adding > if the title and textcontent are empty, then the note won't be added 1`] = `<Notes />`;
+exports[`note adding > if the title and textcontent are empty, then the note won't be added 1`] = `
+<KeepApp
+  user={
+    {
+      "accessToken": "1",
+      "auth": {
+        "object": "object",
+      },
+      "displayName": "Test",
+      "email": "test@test.com",
+      "emailVerified": true,
+      "isAnonymous": false,
+      "metadata": {
+        "object": "object",
+      },
+      "phoneNumber": "",
+      "photoURL": "",
+      "proactiveRefresh": {
+        "object": "object",
+      },
+      "providerData": [
+        {
+          "object": "object",
+        },
+      ],
+      "providerId": "1",
+      "refreshToken": "1",
+      "reloadListener": "",
+      "reloadUserInfo": {
+        "object": "object",
+      },
+      "stsTokenManager": {
+        "object": "object",
+      },
+      "tenantId": "1",
+      "uid": "demo",
+    }
+  }
+/>
+`;
