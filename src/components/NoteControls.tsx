@@ -6,23 +6,69 @@ import {
     MdOutlineImage,
     MdOutlineArchive,
     MdOutlineMoreVert,
-    MdOutlinePushPin,
-    // MdPushPin,
+    MdOutlineUnarchive,
 } from "react-icons/md";
+import { NotesType } from "./KeepApp";
 
 type Props = {
     index: number;
-    moveToTrash: (index: number) => void;
+    notes: NotesType[];
+    setNotes: React.Dispatch<React.SetStateAction<NotesType[]>>;
 };
 
-const NoteControls = ({ index, moveToTrash }: Props) => {
+const NoteControls = ({ index, notes, setNotes }: Props) => {
+    const moveToTrash = (index: number) => {
+        const updatedNotes = notes.map((note, i) => {
+            if (i === index) {
+                note.isTrash = true;
+                if (note.isPinned) {
+                    note.isPinned = false;
+                }
+                if (note.isArchived) {
+                    note.isArchived = false;
+                }
+                return note;
+            } else {
+                return note;
+            }
+        });
+        setNotes([...updatedNotes]);
+    };
+
+    const moveToArchive = (index: number) => {
+        const updatedNotes = notes.map((note, i) => {
+            if (i === index) {
+                note.isArchived = true;
+                if (note.isPinned) {
+                    note.isPinned = false;
+                }
+                return note;
+            } else {
+                return note;
+            }
+        });
+        setNotes([...updatedNotes]);
+    };
+
+    const unArchiveNote = (index: number) => {
+        const updatedNotes = notes.map((note, i) => {
+            if (i === index) {
+                note.isArchived = false;
+                return note;
+            } else {
+                return note;
+            }
+        });
+        setNotes([...updatedNotes]);
+    };
+
     return (
-        <div className="flex justify-evenly opacity-0 hover:opacity-100">
+        <div className="flex opacity-0 hover:opacity-100">
             <div
                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                 data-tip="Remind me"
             >
-                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black ">
+                <button className="btn-sm btn-circle btn border-none bg-inherit ">
                     <MdOutlineNotificationAdd className="text-base" />
                 </button>
             </div>
@@ -31,7 +77,7 @@ const NoteControls = ({ index, moveToTrash }: Props) => {
                 data-tip="Collaborator"
             >
                 <button
-                    className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black disabled:cursor-not-allowed disabled:bg-inherit"
+                    className="btn-sm btn-circle btn border-none bg-inherit disabled:cursor-not-allowed disabled:bg-inherit"
                     disabled
                 >
                     <MdOutlinePersonAddAlt className="text-base" />
@@ -41,7 +87,7 @@ const NoteControls = ({ index, moveToTrash }: Props) => {
                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                 data-tip="Background options"
             >
-                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black ">
+                <button className="btn-sm btn-circle btn border-none bg-inherit ">
                     <MdOutlinePalette className="text-base" />
                 </button>
             </div>
@@ -49,18 +95,36 @@ const NoteControls = ({ index, moveToTrash }: Props) => {
                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                 data-tip="Add image"
             >
-                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black ">
+                <button className="btn-sm btn-circle btn border-none bg-inherit ">
                     <MdOutlineImage className="text-base" />
                 </button>
             </div>
-            <div
-                className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                data-tip="Archive"
-            >
-                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black ">
-                    <MdOutlineArchive className="text-base" />
-                </button>
-            </div>
+            {/* if the note is archived, then change the archive button for an unarchive button */}
+            {notes[index].isArchived ? (
+                <div
+                    className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                    data-tip="Unarchive"
+                >
+                    <button
+                        className="btn-sm btn-circle btn border-none bg-inherit "
+                        onClick={() => unArchiveNote(index)}
+                    >
+                        <MdOutlineUnarchive className="text-base" />
+                    </button>
+                </div>
+            ) : (
+                <div
+                    className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                    data-tip="Archive"
+                >
+                    <button
+                        className="btn-sm btn-circle btn border-none bg-inherit "
+                        onClick={() => moveToArchive(index)}
+                    >
+                        <MdOutlineArchive className="text-base" />
+                    </button>
+                </div>
+            )}
             <div
                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                 data-tip="More"
@@ -68,16 +132,16 @@ const NoteControls = ({ index, moveToTrash }: Props) => {
                 <div className="dropdown-end dropdown">
                     <label
                         tabIndex={0}
-                        className=" btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black "
+                        className=" btn-sm btn-circle btn border-none bg-inherit"
                     >
                         <MdOutlineMoreVert className="text-base" />
                     </label>
                     <ul
                         tabIndex={0}
-                        className="dropdown-content w-max bg-base-100 py-2 text-left shadow-lg"
+                        className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
                     >
                         <li
-                            className="cursor-pointer py-1 px-4 hover:bg-gray-200"
+                            className="py-1 px-4 hover:bg-gray-200"
                             onClick={() => moveToTrash(index)}
                         >
                             <div className="text-sm">Delete note</div>

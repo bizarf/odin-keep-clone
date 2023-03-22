@@ -23,20 +23,20 @@ type Props = {
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
+export type NotesType = {
+    title: string | undefined;
+    noteContent: string | undefined;
+    isPinned: boolean;
+    isArchived: boolean;
+    isTrash: boolean;
+};
+
 const KeepApp = ({ user, setUser }: Props) => {
     const auth = getAuth(app);
     const db = getFirestore(app);
     const navigate = useNavigate();
 
-    const [notes, setNotes] = useState<
-        Array<{
-            title: string | undefined;
-            noteContent: string | undefined;
-            isPinned: boolean;
-            isArchived: boolean;
-            isTrash: boolean;
-        }>
-    >([]);
+    const [notes, setNotes] = useState<NotesType[]>([]);
 
     const addNote = (
         title: string | undefined,
@@ -64,22 +64,13 @@ const KeepApp = ({ user, setUser }: Props) => {
         }
     };
 
-    const moveToTrash = (index: number) => {
-        const updatedNotes = notes.map((note, i) => {
-            if (i === index) {
-                note.isTrash = true;
-                return note;
-            } else {
-                return note;
-            }
-        });
-        setNotes([...updatedNotes]);
-    };
-
     const pinNote = (index: number, pin: boolean) => {
         const updatedNotes = notes.map((note, i) => {
             if (i === index && !pin) {
                 note.isPinned = true;
+                if (note.isArchived) {
+                    note.isArchived = false;
+                }
                 return note;
             } else if (i === index && pin) {
                 note.isPinned = false;
@@ -203,7 +194,6 @@ const KeepApp = ({ user, setUser }: Props) => {
                             notes={notes}
                             setNotes={setNotes}
                             addNote={addNote}
-                            moveToTrash={moveToTrash}
                             editNote={editNote}
                             setEditNote={setEditNote}
                             currentNote={currentNote}
@@ -213,14 +203,43 @@ const KeepApp = ({ user, setUser }: Props) => {
                             editNoteBtn={editNoteBtn}
                             gridView={gridView}
                             pinNote={pinNote}
+                            mainMenuOpen={mainMenuOpen}
                         />
                     }
                 />
-                <Route path="/reminders" element={<Reminders />} />
-                <Route path="/archive" element={<Archive />} />
+                <Route
+                    path="/reminders"
+                    element={
+                        <Reminders
+                            notes={notes}
+                            setNotes={setNotes}
+                            noteComposerOpen={noteComposerOpen}
+                            setNoteComposerOpen={setNoteComposerOpen}
+                            addNote={addNote}
+                        />
+                    }
+                />
+                <Route
+                    path="/archive"
+                    element={
+                        <Archive
+                            notes={notes}
+                            setNotes={setNotes}
+                            gridView={gridView}
+                            mainMenuOpen={mainMenuOpen}
+                        />
+                    }
+                />
                 <Route
                     path="/trash"
-                    element={<Trash notes={notes} setNotes={setNotes} />}
+                    element={
+                        <Trash
+                            notes={notes}
+                            setNotes={setNotes}
+                            gridView={gridView}
+                            mainMenuOpen={mainMenuOpen}
+                        />
+                    }
                 />
                 <Route
                     path="/noteEditor"

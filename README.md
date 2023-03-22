@@ -23,9 +23,10 @@ npm run dev
 -   ESlint
 -   Vitest
 -   Tailwind CSS
--   Daisy UI
+-   DaisyUI
 -   React Icons
 -   Firebase - Cloud Firestore
+-   react-textarea-autosize
 
 <hr>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
     MdMenu,
@@ -29,15 +29,31 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
         setMainMenuOpen((setting) => !setting);
     };
 
+    const [theme, setTheme] = useState("dark");
+
+    // useEffect to handle the dark mode toggle option
+    useEffect(() => {
+        const themeElement =
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            document.querySelector<HTMLElement>(`[data-theme]`)!;
+
+        if (theme === "dark") {
+            themeElement.dataset.theme = "dark";
+        } else {
+            themeElement.dataset.theme = "light";
+        }
+    }, [theme]);
+
     return (
-        <div className="col-span-full flex items-center justify-between shadow-[0_1px_0_1px_rgba(241,245,249,1)]">
+        <div className="col-span-full flex items-center justify-between border-b-[1px] border-solid">
+            {/* hamburg menu */}
             <div className="flex items-center pl-3">
                 <div
                     className="tooltip tooltip-bottom [--tooltip-tail:0px] before:left-3/4 before:text-xs"
                     data-tip="Main menu"
                 >
                     <button
-                        className="btn-circle btn border-none bg-inherit text-slate-600 hover:bg-slate-100 hover:text-black"
+                        className="btn-circle btn border-none bg-inherit text-slate-600 hover:bg-slate-200 hover:text-black"
                         onClick={toggleMainMenuView}
                     >
                         <MdMenu className="text-2xl" />
@@ -65,14 +81,17 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                     <div className="text-xl">Trash</div>
                 )}
             </div>
+            {/* search bar. non-functioning */}
             <div className="input-group-md input-group flex justify-center">
-                <button className="btn-circle btn">
-                    <MdOutlineSearch className="text-2xl" />
-                </button>
+                <div>
+                    <button className="btn-circle btn">
+                        <MdOutlineSearch className="text-2xl" />
+                    </button>
+                </div>
                 <input
                     type="text"
                     placeholder="Search"
-                    className="input w-1/2 bg-slate-100"
+                    className="input w-1/2 bg-slate-200"
                 />
             </div>
             <div className="flex items-center">
@@ -81,22 +100,21 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                         data-tip="Refresh"
                     >
-                        <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black">
+                        <button className="btn-circle btn border-none bg-inherit">
                             <MdRefresh className="text-2xl" />
                         </button>
                     </div>
+                    {/* note layout controls */}
                     {gridView ? (
                         <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="List view"
                         >
                             <button
-                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                                className="btn-circle btn border-none bg-inherit"
                                 onClick={toggleNoteLayout}
                             >
-                                <span>
-                                    <MdOutlineViewAgenda className="rounded-2xl text-2xl hover:bg-gray-200" />
-                                </span>
+                                <MdOutlineViewAgenda className="rounded-2xl text-2xl" />
                             </button>
                         </div>
                     ) : (
@@ -105,24 +123,70 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                             data-tip="Grid view"
                         >
                             <button
-                                className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                                className="btn-circle btn border-none bg-inherit"
                                 onClick={toggleNoteLayout}
                             >
-                                <span>
-                                    <MdGridView className="rounded-2xl text-2xl hover:bg-gray-200" />
-                                </span>
+                                <MdGridView className="rounded-2xl text-2xl" />
                             </button>
                         </div>
                     )}
+                    {/* settings area */}
                     <div
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                         data-tip="Settings"
                     >
-                        <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black">
-                            <MdOutlineSettings className="rounded-2xl text-2xl hover:bg-gray-200" />
-                        </button>
+                        <div className="dropdown-end dropdown">
+                            <label
+                                tabIndex={0}
+                                className="btn-circle btn border-none bg-inherit"
+                            >
+                                <MdOutlineSettings className="rounded-2xl text-2xl" />
+                            </label>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
+                            >
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">Settings</div>
+                                </li>
+                                {theme === "light" ? (
+                                    <li
+                                        className="py-1 px-4 hover:bg-gray-200"
+                                        onClick={() => setTheme("dark")}
+                                    >
+                                        <div className="text-sm">
+                                            Enable dark theme
+                                        </div>
+                                    </li>
+                                ) : (
+                                    <li
+                                        className="py-1 px-4 hover:bg-gray-200"
+                                        onClick={() => setTheme("light")}
+                                    >
+                                        <div className="text-sm">
+                                            Disable dark theme
+                                        </div>
+                                    </li>
+                                )}
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">Send feedback</div>
+                                </li>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">Help</div>
+                                </li>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">App downloads</div>
+                                </li>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">
+                                        Keyboard shortcuts
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                {/* user avatar area */}
                 <div className="flex items-center pr-4">
                     <div
                         className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
@@ -130,7 +194,7 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                         ${user?.displayName}
                         ${user?.email}`}
                     >
-                        <button className="btn-sm btn-circle avatar btn hover:bg-slate-100">
+                        <button className="btn-sm btn-circle avatar btn hover:bg-slate-200">
                             <div className="rounded-full">
                                 <img
                                     src={user?.photoURL}

@@ -1,7 +1,5 @@
-import React, { ChangeEvent, useEffect } from "react";
+import React, { ChangeEvent } from "react";
 import {
-    // MdOutlineCheckBox,
-    // MdOutlineBrush,
     MdOutlineImage,
     MdPushPin,
     MdOutlinePushPin,
@@ -13,6 +11,7 @@ import {
     MdOutlineUndo,
     MdOutlineRedo,
 } from "react-icons/md";
+import TextareaAutoresize from "react-textarea-autosize";
 
 type Props = {
     editNote: boolean;
@@ -97,13 +96,6 @@ const NoteEditor = ({
         setEditNote((state) => !state);
     };
 
-    // const textareaAutoHeight = () => {
-    //     const noteContent = document.querySelector("#noteContentEdit");
-    //     noteContent.style.height = "";
-    //     noteContent.style.height =
-    //         Math.min(noteContent?.scrollHeight, 300) + "px";
-    // };
-
     if (!editNote) return null;
 
     return (
@@ -112,14 +104,14 @@ const NoteEditor = ({
             onClick={closeEdit}
         >
             <div
-                className="flex w-2/5 flex-col rounded-lg bg-white p-2"
+                className="flex w-full flex-col rounded-lg border-[1px] border-solid bg-base-100 pl-2 sm:max-w-xl"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex">
                     <input
                         type="text"
                         placeholder="Title"
-                        className="flex-1 focus:outline-none"
+                        className="w-full bg-inherit px-2 font-semibold focus:outline-none"
                         id="noteTitleEdit"
                         value={currentNote?.title}
                         onChange={editTitle}
@@ -129,7 +121,7 @@ const NoteEditor = ({
                         data-tip="Pin note"
                     >
                         <button
-                            className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                            className="btn-circle btn border-none bg-inherit"
                             id="pinBtn"
                         >
                             {currentNote?.isPinned ? (
@@ -140,21 +132,21 @@ const NoteEditor = ({
                         </button>
                     </div>
                 </div>
-                <textarea
+                <TextareaAutoresize
                     placeholder="Take a note..."
-                    className=" h-auto resize-none overflow-visible focus:outline-none"
+                    className="resize-none bg-inherit p-2 focus:outline-none"
                     id="noteContentEdit"
-                    // onInput={textareaAutoHeight}
                     value={currentNote?.noteContent}
                     onChange={editNoteContent}
-                ></textarea>
+                    maxRows={20}
+                ></TextareaAutoresize>
                 <div className="flex justify-between">
                     <div className="flex w-4/6 justify-between">
                         <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Remind me"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineNotificationAdd className="text-lg" />
                             </button>
                         </div>
@@ -163,7 +155,7 @@ const NoteEditor = ({
                             data-tip="Collaborator"
                         >
                             <button
-                                className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black"
+                                className="btn-sm btn-circle btn border-none bg-inherit"
                                 disabled
                             >
                                 <MdOutlinePersonAddAlt className="text-lg" />
@@ -173,7 +165,7 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Background options"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlinePalette className="text-lg" />
                             </button>
                         </div>
@@ -181,7 +173,7 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Add image"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineImage className="text-lg" />
                             </button>
                         </div>
@@ -189,7 +181,7 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Archive"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineArchive className="text-lg" />
                             </button>
                         </div>
@@ -197,7 +189,7 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="More"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineMoreVert className="text-lg" />
                             </button>
                         </div>
@@ -205,7 +197,7 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Undo"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineUndo className="text-lg" />
                             </button>
                         </div>
@@ -213,13 +205,13 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Redo"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                            <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineRedo className="text-lg" />
                             </button>
                         </div>
                     </div>
                     <div
-                        className="btn-sm btn border-none bg-inherit px-6 text-slate-500 hover:bg-slate-100 hover:text-black"
+                        className="btn-sm btn border-none bg-inherit px-6"
                         onClick={closeEdit}
                     >
                         Close

@@ -13,6 +13,7 @@ import {
     MdOutlineUndo,
     MdOutlineRedo,
 } from "react-icons/md";
+import TextareaResize from "react-textarea-autosize";
 
 type Props = {
     noteComposerOpen: boolean;
@@ -47,14 +48,14 @@ const NoteComposer = ({
     };
 
     return (
-        <div className="mx-60 my-8 border-2 border-solid px-4">
+        <div className="mx-60 my-8 rounded-lg border-[1px] border-solid px-4 shadow-md">
             {noteComposerOpen ? (
                 <div className="flex flex-col">
                     <div className="flex">
                         <input
                             type="text"
                             placeholder="Title"
-                            className="flex-1 focus:outline-none"
+                            className="flex-1 bg-inherit font-semibold focus:outline-none"
                             id="noteTitle"
                         />
                         <button
@@ -69,18 +70,19 @@ const NoteComposer = ({
                             )}
                         </button>
                     </div>
-                    <textarea
+                    <TextareaResize
                         placeholder="Take a note..."
-                        className="resize-none focus:outline-none"
+                        className="resize-none bg-inherit text-sm focus:outline-none"
                         id="noteContent"
-                    ></textarea>
+                        maxRows={20}
+                    ></TextareaResize>
                     <div className="flex items-center justify-between py-2">
                         <div className="flex w-4/6 justify-between">
                             <div
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Remind me"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineNotificationAdd className="text-lg" />
                                 </button>
                             </div>
@@ -89,7 +91,7 @@ const NoteComposer = ({
                                 data-tip="Collaborator"
                             >
                                 <button
-                                    className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black"
+                                    className="btn-sm btn-circle btn border-none bg-inherit"
                                     disabled
                                 >
                                     <MdOutlinePersonAddAlt className="text-lg" />
@@ -99,7 +101,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Background options"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlinePalette className="text-lg" />
                                 </button>
                             </div>
@@ -107,7 +109,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Add image"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineImage className="text-lg" />
                                 </button>
                             </div>
@@ -115,7 +117,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Archive"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineArchive className="text-lg" />
                                 </button>
                             </div>
@@ -123,7 +125,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="More"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineMoreVert className="text-lg" />
                                 </button>
                             </div>
@@ -131,7 +133,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Undo"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineUndo className="text-lg" />
                                 </button>
                             </div>
@@ -139,7 +141,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Redo"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineRedo className="text-lg" />
                                 </button>
                             </div>

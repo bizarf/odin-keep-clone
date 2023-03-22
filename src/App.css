@@ -1,0 +1,31 @@
+/* daisyui dark mode overrides */
+[data-theme="dark"] div {
+    color: #e8eaed;
+    --tw-border-opacity: 1;
+    border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+[data-theme="dark"] .btn:hover {
+    background-color: rgba(232, 234, 237, 0.08);
+    color: #e8eaed;
+}
+
+[data-theme="dark"] li:hover {
+    background-color: rgba(232, 234, 237, 0.08);
+}
+
+/* daisyui light mode overrides */
+[data-theme="light"] .btn {
+    --tw-text-opacity: 1;
+    color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+
+[data-theme="light"] .btn:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+[data-theme="light"] .nav--buttons {
+}

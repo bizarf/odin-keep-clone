@@ -5,9 +5,7 @@ import Splash from "./components/Splash";
 import KeepApp from "./components/KeepApp";
 import SignIn from "./components/SignIn";
 
-export interface User {
-    // accessToken: string;
-    // auth: object;
+export type User = {
     displayName: string | null;
     email: string | null;
     emailVerified: boolean;
@@ -15,16 +13,12 @@ export interface User {
     metadata: object;
     phoneNumber: string | null;
     photoURL: string | null;
-    // proactiveRefresh: object;
     providerData: Array<object>;
     providerId: string;
-    // reloadListener: unknown;
-    // reloadUserInfo: object;
-    // stsTokenManager: object;
     tenantId: string | null;
     uid: string;
     refreshToken: string;
-}
+};
 
 const App = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -34,10 +28,7 @@ const App = () => {
             <BrowserRouter basename="odin-keep-clone">
                 <Routes>
                     <Route path="/" element={<Splash />} />
-                    <Route
-                        path="/sign-in"
-                        element={<SignIn setUser={setUser} />}
-                    />
+                    <Route path="/sign-in" element={<SignIn />} />
                     <Route
                         path="/keep/*"
                         element={<KeepApp user={user} setUser={setUser} />}

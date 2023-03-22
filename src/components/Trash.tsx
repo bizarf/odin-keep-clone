@@ -4,29 +4,28 @@ import {
     MdDeleteForever,
     MdRestoreFromTrash,
 } from "react-icons/md";
+import { NotesType } from "./KeepApp";
 
 type Props = {
-    notes: {
-        title: string | undefined;
-        noteContent: string | undefined;
-        isPinned: boolean;
-        isArchived: boolean;
-        isTrash: boolean;
-    }[];
-    setNotes: React.Dispatch<
-        React.SetStateAction<
-            {
-                title: string | undefined;
-                noteContent: string | undefined;
-                isPinned: boolean;
-                isArchived: boolean;
-                isTrash: boolean;
-            }[]
-        >
-    >;
+    notes: NotesType[];
+    setNotes: React.Dispatch<React.SetStateAction<NotesType[]>>;
+    gridView: boolean;
+    mainMenuOpen: boolean;
 };
 
-const Trash = ({ notes, setNotes }: Props) => {
+const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
+    let viewClass = "grid";
+
+    if (gridView && mainMenuOpen) {
+        viewClass +=
+            " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-[5%] m-2 gap-x-4 gap-y-4";
+    } else if (gridView && !mainMenuOpen) {
+        viewClass +=
+            " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-[5%] m-2 gap-x-4 gap-y-4";
+    } else {
+        viewClass += " mx-[25%] gap-y-4";
+    }
+
     const deleteNote = (index: number) => {
         const updatedNotes = notes;
         updatedNotes.splice(index, 1);
@@ -50,21 +49,26 @@ const Trash = ({ notes, setNotes }: Props) => {
             <div className="flex justify-center p-6 italic">
                 Notes in Trash are deleted after 7 days.
             </div>
-            <div className="flex flex-wrap">
+            <div className={viewClass}>
                 {notes.map(
                     (note, index) =>
                         note.isTrash && (
                             <div
                                 key={index}
-                                className="m-2 h-max w-60 border-2 border-solid"
+                                className="h-max border-2 border-solid"
                             >
-                                <div className="whitespace-pre-wrap p-3">
-                                    <div>{note.title}</div>
-                                    <div>{note.noteContent}</div>
+                                <div className="whitespace-pre-wrap break-all p-3">
+                                    <div className="text-sm font-semibold">
+                                        {note.title}
+                                    </div>
+                                    <div className="max-h-72 overflow-hidden text-sm">
+                                        {note.noteContent}
+                                    </div>
                                 </div>
-                                <div>
+                                {/* delete note controls */}
+                                <div className="opacity-0 hover:opacity-100">
                                     <div
-                                        className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                        className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                         data-tip="Delete forever"
                                     >
                                         <button
@@ -75,7 +79,7 @@ const Trash = ({ notes, setNotes }: Props) => {
                                         </button>
                                     </div>
                                     <div
-                                        className="tooltip tooltip-bottom text-xs before:opacity-0 hover:before:w-max hover:before:rounded hover:before:bg-zinc-600 hover:before:py-1 hover:before:px-2 hover:before:text-white hover:before:opacity-100"
+                                        className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                         data-tip="Restore"
                                     >
                                         <button
