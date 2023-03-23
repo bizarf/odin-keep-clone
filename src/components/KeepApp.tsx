@@ -82,6 +82,7 @@ const KeepApp = ({ user, setUser }: Props) => {
         setNotes([...updatedNotes]);
     };
 
+    const [theme, setTheme] = useState("light");
     const [gridView, setGridView] = useState(true);
 
     const [mainMenuOpen, setMainMenuOpen] = useState(true);
@@ -182,8 +183,10 @@ const KeepApp = ({ user, setUser }: Props) => {
                 setGridView={setGridView}
                 user={user}
                 setMainMenuOpen={setMainMenuOpen}
+                theme={theme}
+                setTheme={setTheme}
             />
-            <Nav mainMenuOpen={mainMenuOpen} />
+            <Nav mainMenuOpen={mainMenuOpen} theme={theme} />
             <Routes>
                 <Route
                     index

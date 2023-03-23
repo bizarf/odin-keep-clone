@@ -38,7 +38,7 @@ const Archive = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                     <div className="text-sm font-semibold">
                                         {note.title}
                                     </div>
-                                    <div className="max-h-72 overflow-hidden text-sm">
+                                    <div className="note--textarea clear-right overflow-hidden overflow-ellipsis text-sm">
                                         {note.noteContent}
                                     </div>
                                 </div>

@@ -16,9 +16,18 @@ type Props = {
     setGridView: React.Dispatch<React.SetStateAction<boolean>>;
     user: User | null;
     setMainMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    theme: string;
+    setTheme: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
+const Header = ({
+    gridView,
+    setGridView,
+    user,
+    setMainMenuOpen,
+    theme,
+    setTheme,
+}: Props) => {
     const location = useLocation();
 
     const toggleNoteLayout = () => {
@@ -28,8 +37,6 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
     const toggleMainMenuView = () => {
         setMainMenuOpen((setting) => !setting);
     };
-
-    const [theme, setTheme] = useState("dark");
 
     // useEffect to handle the dark mode toggle option
     useEffect(() => {
@@ -45,7 +52,7 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
     }, [theme]);
 
     return (
-        <div className="col-span-full flex items-center justify-between border-b-[1px] border-solid">
+        <div className="col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
             {/* hamburg menu */}
             <div className="flex items-center pl-3">
                 <div
@@ -82,16 +89,16 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                 )}
             </div>
             {/* search bar. non-functioning */}
-            <div className="input-group-md input-group flex justify-center">
-                <div>
-                    <button className="btn-circle btn">
+            <div className="input-group flex justify-center">
+                <div className="bg-slate-200">
+                    <button className="btn-sm btn-circle btn">
                         <MdOutlineSearch className="text-2xl" />
                     </button>
                 </div>
                 <input
                     type="text"
                     placeholder="Search"
-                    className="input w-1/2 bg-slate-200"
+                    className="input w-8/12 bg-slate-200"
                 />
             </div>
             <div className="flex items-center">
@@ -194,15 +201,40 @@ const Header = ({ gridView, setGridView, user, setMainMenuOpen }: Props) => {
                         ${user?.displayName}
                         ${user?.email}`}
                     >
-                        <button className="btn-sm btn-circle avatar btn hover:bg-slate-200">
-                            <div className="rounded-full">
-                                <img
-                                    src={user?.photoURL}
-                                    alt="user avatar"
-                                    referrerPolicy="no-referrer"
-                                />
-                            </div>
-                        </button>
+                        <div className="dropdown-end dropdown">
+                            <label
+                                tabIndex={0}
+                                className="btn-sm btn-circle avatar btn border-none bg-inherit"
+                            >
+                                <div className="rounded-full">
+                                    <img
+                                        src={user?.photoURL}
+                                        alt="user avatar"
+                                        referrerPolicy="no-referrer"
+                                    />
+                                </div>
+                            </label>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
+                            >
+                                <div className="py-1 px-4">
+                                    <div>avatar goes here</div>
+                                    <div>
+                                        <div>display name</div>
+                                        <div>email</div>
+                                    </div>
+                                </div>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">
+                                        Add another account
+                                    </div>
+                                </li>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">Sign out</div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

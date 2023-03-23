@@ -78,7 +78,7 @@ const Notes = ({
 
     if (gridView && mainMenuOpen) {
         viewClass +=
-            " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-[5%] m-2 gap-x-4 gap-y-4 grid-rows-[masonry]";
+            " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-[5%] m-2 gap-x-4 gap-y-4";
     } else if (gridView && !mainMenuOpen) {
         viewClass +=
             " sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-[5%] m-2 gap-x-4 gap-y-4";
@@ -87,14 +87,14 @@ const Notes = ({
     }
 
     return (
-        <div className="">
+        <div>
             <NoteComposer
                 noteComposerOpen={noteComposerOpen}
                 setNoteComposerOpen={setNoteComposerOpen}
                 addNote={addNote}
             />
             <div>
-                <div className="">
+                <div>
                     {notes.some((note) => note.isPinned) && (
                         <div className={`${viewClass} text-sm`}>PINNED</div>
                     )}
@@ -104,14 +104,15 @@ const Notes = ({
                                 note.isPinned && (
                                     <div
                                         key={index}
-                                        className="h-max rounded-lg border-[1px] border-solid "
+                                        className="h-max rounded-lg border-[1px] border-solid"
                                     >
                                         <div
                                             className="tooltip tooltip-bottom float-right [--tooltip-tail:0px] before:text-xs"
                                             data-tip="Pin note"
                                         >
+                                            {/* -0.5rem margin gets rid of the margin and allows textarea to properly fill the width */}
                                             <button
-                                                className="= btn-sm btn-circle btn border-none bg-inherit"
+                                                className="= btn-sm btn-circle btn float-right -m-2 mt-2 mr-2 border-none bg-inherit"
                                                 onClick={() =>
                                                     pinNote(
                                                         index,
@@ -120,9 +121,9 @@ const Notes = ({
                                                 }
                                             >
                                                 {note.isPinned ? (
-                                                    <MdPushPin className="text-lg" />
+                                                    <MdPushPin className="text-2xl" />
                                                 ) : (
-                                                    <MdOutlinePushPin className="text-lg" />
+                                                    <MdOutlinePushPin className="text-2xl" />
                                                 )}
                                             </button>
                                         </div>
@@ -135,7 +136,7 @@ const Notes = ({
                                             <div className="text-sm font-semibold">
                                                 {note.title}
                                             </div>
-                                            <div className="max-h-72 overflow-hidden text-sm">
+                                            <div className="note--textarea clear-right overflow-hidden overflow-ellipsis text-sm">
                                                 {note.noteContent}
                                             </div>
                                         </div>
@@ -163,19 +164,20 @@ const Notes = ({
                         !note.isArchived && (
                             <div
                                 key={index}
-                                className="h-max rounded-lg border-[1px] border-solid"
+                                className="h-fit rounded-lg border-[1px] border-solid"
                             >
                                 <div
                                     className="tooltip tooltip-bottom float-right [--tooltip-tail:0px] before:text-xs"
                                     data-tip="Pin note"
                                 >
+                                    {/* -0.5rem margin gets rid of the margin and allows textarea to properly fill the width */}
                                     <button
-                                        className="= btn-sm btn-circle btn border-none bg-inherit"
+                                        className="= btn-sm btn-circle btn float-right -m-2 mt-2 mr-2 border-none bg-inherit opacity-0 hover:opacity-100"
                                         onClick={() =>
                                             pinNote(index, note.isPinned)
                                         }
                                     >
-                                        <MdOutlinePushPin className="text-lg" />
+                                        <MdOutlinePushPin className="text-2xl" />
                                     </button>
                                 </div>
                                 <div
@@ -185,7 +187,8 @@ const Notes = ({
                                     <div className="text-sm font-semibold">
                                         {note.title}
                                     </div>
-                                    <div className="max-h-72 overflow-hidden overflow-ellipsis text-sm">
+                                    {/* max height of 6rem for now. I wanted a masonry grid, but the implementation might be messy especially with the view switching system */}
+                                    <div className="note--textarea overflow-hidden overflow-ellipsis text-sm">
                                         {note.noteContent}
                                     </div>
                                 </div>

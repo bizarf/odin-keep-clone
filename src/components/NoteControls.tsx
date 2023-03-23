@@ -69,7 +69,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="Remind me"
             >
                 <button className="btn-sm btn-circle btn border-none bg-inherit ">
-                    <MdOutlineNotificationAdd className="text-base" />
+                    <MdOutlineNotificationAdd className="text-lg" />
                 </button>
             </div>
             <div
@@ -80,7 +80,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                     className="btn-sm btn-circle btn border-none bg-inherit disabled:cursor-not-allowed disabled:bg-inherit"
                     disabled
                 >
-                    <MdOutlinePersonAddAlt className="text-base" />
+                    <MdOutlinePersonAddAlt className="text-lg" />
                 </button>
             </div>
             <div
@@ -88,7 +88,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="Background options"
             >
                 <button className="btn-sm btn-circle btn border-none bg-inherit ">
-                    <MdOutlinePalette className="text-base" />
+                    <MdOutlinePalette className="text-lg" />
                 </button>
             </div>
             <div
@@ -96,7 +96,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="Add image"
             >
                 <button className="btn-sm btn-circle btn border-none bg-inherit ">
-                    <MdOutlineImage className="text-base" />
+                    <MdOutlineImage className="text-lg" />
                 </button>
             </div>
             {/* if the note is archived, then change the archive button for an unarchive button */}
@@ -109,7 +109,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                         className="btn-sm btn-circle btn border-none bg-inherit "
                         onClick={() => unArchiveNote(index)}
                     >
-                        <MdOutlineUnarchive className="text-base" />
+                        <MdOutlineUnarchive className="text-lg" />
                     </button>
                 </div>
             ) : (
@@ -121,7 +121,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                         className="btn-sm btn-circle btn border-none bg-inherit "
                         onClick={() => moveToArchive(index)}
                     >
-                        <MdOutlineArchive className="text-base" />
+                        <MdOutlineArchive className="text-lg" />
                     </button>
                 </div>
             )}
@@ -134,7 +134,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                         tabIndex={0}
                         className=" btn-sm btn-circle btn border-none bg-inherit"
                     >
-                        <MdOutlineMoreVert className="text-base" />
+                        <MdOutlineMoreVert className="text-lg" />
                     </label>
                     <ul
                         tabIndex={0}

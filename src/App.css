@@ -14,10 +14,15 @@
     background-color: rgba(232, 234, 237, 0.08);
 }
 
+[data-theme="dark"] .navEdit--label:hover {
+    background-color: rgba(232, 234, 237, 0.08);
+}
+
 /* daisyui light mode overrides */
 [data-theme="light"] .btn {
     --tw-text-opacity: 1;
     color: rgb(100 116 139 / var(--tw-text-opacity));
+    background-color: inherit;
 }
 
 [data-theme="light"] .btn:hover {
@@ -27,5 +32,14 @@
     color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
-[data-theme="light"] .nav--buttons {
+[data-theme="light"] .navEdit--label:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.note--textarea {
+    /* this adds the ellipsis to multiline text */
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
 }
