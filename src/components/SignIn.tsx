@@ -5,6 +5,7 @@ import {
     GoogleAuthProvider,
     signInWithRedirect,
     onAuthStateChanged,
+    getRedirectResult,
 } from "firebase/auth";
 import { app } from "./firebaseSetup";
 
@@ -27,9 +28,25 @@ const SignIn = () => {
     };
 
     useEffect(() => {
-        // on render, run the google sign in redirect function. this is necessary as after the redirect, this page will re-render again.
-        googleSignInRedirect();
+        const redirectResult = async () => {
+            getRedirectResult(auth).then((result) => {
+                if (result) {
+                    navigate("/keep/");
+                } else if (!result) {
+                    provider.setCustomParameters({
+                        prompt: "select_account",
+                    });
+                    signInWithRedirect(auth, provider);
+                }
+            });
+        };
+        redirectResult();
     }, []);
+
+    // useEffect(() => {
+    // on render, run the google sign in redirect function. this is necessary as after the redirect, this page will re-render again.
+    //     googleSignInRedirect();
+    // }, []);
 
     return null;
 };

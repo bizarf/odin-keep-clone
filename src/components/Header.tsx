@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
     MdMenu,
     MdRefresh,
@@ -10,6 +10,8 @@ import {
     MdTask,
 } from "react-icons/md";
 import { User } from "../App";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "./firebaseSetup";
 
 type Props = {
     gridView: boolean;
@@ -18,6 +20,8 @@ type Props = {
     setMainMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
     theme: string;
     setTheme: React.Dispatch<React.SetStateAction<string>>;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    refreshBtn: () => void;
 };
 
 const Header = ({
@@ -27,6 +31,8 @@ const Header = ({
     setMainMenuOpen,
     theme,
     setTheme,
+    setUser,
+    refreshBtn,
 }: Props) => {
     const location = useLocation();
 
@@ -50,6 +56,24 @@ const Header = ({
             themeElement.dataset.theme = "light";
         }
     }, [theme]);
+
+    const navigate = useNavigate();
+
+    const googleSignOut = async () => {
+        const auth = getAuth(app);
+        await signOut(auth)
+            .then(() => {
+                console.log("signed out");
+                // set the user state back to null and send the user back to the splash page
+                setUser(null);
+                navigate("../");
+                // Sign-out successful.
+            })
+            .catch((error) => {
+                console.log(error);
+                // An error happened.
+            });
+    };
 
     return (
         <div className="col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
@@ -89,16 +113,14 @@ const Header = ({
                 )}
             </div>
             {/* search bar. non-functioning */}
-            <div className="input-group flex justify-center">
-                <div className="bg-slate-200">
-                    <button className="btn-sm btn-circle btn">
-                        <MdOutlineSearch className="text-2xl" />
-                    </button>
-                </div>
+            <div className="searchBar flex w-8/12 items-center justify-self-center rounded-lg border-[1px] bg-slate-100">
+                <button className=" btn-sm btn-circle btn m-2 border-none bg-inherit">
+                    <MdOutlineSearch className="text-2xl" />
+                </button>
                 <input
                     type="text"
                     placeholder="Search"
-                    className="input w-8/12 bg-slate-200"
+                    className="searchBar input w-full rounded-l-none bg-slate-100"
                 />
             </div>
             <div className="flex items-center">
@@ -107,7 +129,10 @@ const Header = ({
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                         data-tip="Refresh"
                     >
-                        <button className="btn-circle btn border-none bg-inherit">
+                        <button
+                            className="btn-circle btn border-none bg-inherit"
+                            onClick={refreshBtn}
+                        >
                             <MdRefresh className="text-2xl" />
                         </button>
                     </div>
@@ -156,10 +181,17 @@ const Header = ({
                                 <li className="py-1 px-4 hover:bg-gray-200">
                                     <div className="text-sm">Settings</div>
                                 </li>
+                                {/* dark mode toggle */}
                                 {theme === "light" ? (
                                     <li
                                         className="py-1 px-4 hover:bg-gray-200"
-                                        onClick={() => setTheme("dark")}
+                                        onClick={() => {
+                                            localStorage.setItem(
+                                                "theme",
+                                                "dark"
+                                            );
+                                            setTheme("dark");
+                                        }}
                                     >
                                         <div className="text-sm">
                                             Enable dark theme
@@ -168,7 +200,13 @@ const Header = ({
                                 ) : (
                                     <li
                                         className="py-1 px-4 hover:bg-gray-200"
-                                        onClick={() => setTheme("light")}
+                                        onClick={() => {
+                                            localStorage.setItem(
+                                                "theme",
+                                                "light"
+                                            );
+                                            setTheme("light");
+                                        }}
                                     >
                                         <div className="text-sm">
                                             Disable dark theme
@@ -216,21 +254,35 @@ const Header = ({
                             </label>
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
+                                className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
                             >
-                                <div className="py-1 px-4">
-                                    <div>avatar goes here</div>
-                                    <div>
-                                        <div>display name</div>
-                                        <div>email</div>
+                                <div className="bg-base-100">
+                                    <div className="flex items-center py-1 px-4">
+                                        <div className="avatar m-2">
+                                            <div className="w-16 rounded-full">
+                                                <img
+                                                    src={user?.photoURL}
+                                                    alt="user avatar"
+                                                    referrerPolicy="no-referrer"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="text-sm font-semibold">{`${user?.displayName}`}</div>
+                                            <div className="text-xs">{`${user?.email}`}</div>
+                                        </div>
                                     </div>
+                                    <div className="divider m-0"></div>
+                                    <li className="py-1 px-4 hover:bg-gray-200">
+                                        <div className="text-sm">
+                                            Add another account
+                                        </div>
+                                    </li>
                                 </div>
-                                <li className="py-1 px-4 hover:bg-gray-200">
-                                    <div className="text-sm">
-                                        Add another account
-                                    </div>
-                                </li>
-                                <li className="py-1 px-4 hover:bg-gray-200">
+                                <li
+                                    className="py-1 px-4 hover:bg-gray-200"
+                                    onClick={googleSignOut}
+                                >
                                     <div className="text-sm">Sign out</div>
                                 </li>
                             </ul>

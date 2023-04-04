@@ -58,7 +58,7 @@ const NoteComposer = ({
                             className="flex-1 bg-inherit font-semibold focus:outline-none"
                             id="noteTitle"
                         />
-                        <button
+                        <div
                             className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
                             id="pinBtn"
                             onClick={() => setIsPinned((state) => !state)}
@@ -68,7 +68,7 @@ const NoteComposer = ({
                             ) : (
                                 <MdOutlinePushPin className="text-2xl" />
                             )}
-                        </button>
+                        </div>
                     </div>
                     <TextareaResize
                         placeholder="Take a note..."
@@ -82,7 +82,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Remind me"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit !outline-slate-500">
                                     <MdOutlineNotificationAdd className="text-lg" />
                                 </button>
                             </div>

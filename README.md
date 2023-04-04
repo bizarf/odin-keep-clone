@@ -32,4 +32,4 @@ npm run dev
 
 ##### Credits:
 
--
+-   Loading dual ring CSS: https://loading.io/css/

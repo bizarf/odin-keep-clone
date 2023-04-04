@@ -83,6 +83,16 @@ const KeepApp = ({ user, setUser }: Props) => {
     };
 
     const [theme, setTheme] = useState("light");
+    // useEffect to get the theme setting from localstorage on render
+    useEffect(() => {
+        const localStorageTheme = localStorage.getItem("theme");
+        if (localStorageTheme === "light" || localStorageTheme === null) {
+            setTheme("light");
+        } else {
+            setTheme("dark");
+        }
+    }, []);
+
     const [gridView, setGridView] = useState(true);
 
     const [mainMenuOpen, setMainMenuOpen] = useState(true);
@@ -116,6 +126,12 @@ const KeepApp = ({ user, setUser }: Props) => {
         setEditNote((state) => !state);
     };
 
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+    const refreshBtn = () => {
+        setDataFetched((state) => !state);
+        fetchUserData();
+    };
+
     // firebase stuff
     useEffect(() => {
         // if user is logged in, then send the data to the user state. if not then send them back to the splash page.
@@ -131,15 +147,21 @@ const KeepApp = ({ user, setUser }: Props) => {
         }
     }, []);
 
+    // safeguard to prevent blank array being saved before firestore data is fetched
+    const [dataFetched, setDataFetched] = useState(false);
+
     const fetchUserData = async () => {
         if (user) {
             const docRef = doc(db, "keep-data", `${user?.uid}`);
             const docSnap = await getDoc(docRef);
+            setLoadingSpinner((state) => !state);
 
             if (docSnap.exists()) {
                 // console.log("Document data:", docSnap.data());
                 // console.log(docSnap.data().notes);
                 setNotes([...docSnap.data().notes]);
+                setTimeout(() => setLoadingSpinner((state) => !state), 1000);
+                setDataFetched((state) => !state);
             } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -147,6 +169,8 @@ const KeepApp = ({ user, setUser }: Props) => {
                 await setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
                     notes: notes,
                 });
+                setTimeout(() => setLoadingSpinner((state) => !state), 1000);
+                setDataFetched((state) => !state);
             }
         }
     };
@@ -154,7 +178,7 @@ const KeepApp = ({ user, setUser }: Props) => {
     useEffect(() => {
         console.log(user);
         // as soon as the user state is changed, we'll fetch firestore data
-        if (user?.uid != "demo") {
+        if (user != null && user?.uid != "demo") {
             fetchUserData();
         }
     }, [user]);
@@ -168,7 +192,7 @@ const KeepApp = ({ user, setUser }: Props) => {
         };
 
         // function will only work if the user is logged in
-        if (user != null) {
+        if (user != null && dataFetched) {
             // I'm not allowing the demo data to be stored on firestore
             if (user.uid != "demo") {
                 saveDataToFirestore().catch(console.error);
@@ -185,6 +209,8 @@ const KeepApp = ({ user, setUser }: Props) => {
                 setMainMenuOpen={setMainMenuOpen}
                 theme={theme}
                 setTheme={setTheme}
+                setUser={setUser}
+                refreshBtn={refreshBtn}
             />
             <Nav mainMenuOpen={mainMenuOpen} theme={theme} />
             <Routes>
@@ -259,6 +285,11 @@ const KeepApp = ({ user, setUser }: Props) => {
                     }
                 />
             </Routes>
+            {loadingSpinner && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-20">
+                    <div className="lds-dual-ring"></div>
+                </div>
+            )}
         </div>
     );
 };

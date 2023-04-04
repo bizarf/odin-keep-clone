@@ -18,6 +18,14 @@
     background-color: rgba(232, 234, 237, 0.08);
 }
 
+[data-theme="dark"] .searchBar {
+    background-color: #525252;
+}
+
+[data-theme="dark"] .searchBar::placeholder {
+    color: #e8eaed;
+}
+
 /* daisyui light mode overrides */
 [data-theme="light"] .btn {
     --tw-text-opacity: 1;
@@ -42,4 +50,30 @@
     display: -webkit-box;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
+}
+
+/* loading ring */
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
