@@ -27,6 +27,7 @@ npm run dev
 -   React Icons
 -   Firebase - Cloud Firestore
 -   react-textarea-autosize
+-   react-responsive-carousel
 
 <hr>
 

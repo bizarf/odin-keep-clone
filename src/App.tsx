@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Splash from "./components/Splash";
 import KeepApp from "./components/KeepApp";
-import SignIn from "./components/SignIn";
 
 export type User = {
     displayName: string | null;
@@ -28,7 +27,7 @@ const App = () => {
             <BrowserRouter basename="odin-keep-clone">
                 <Routes>
                     <Route path="/" element={<Splash setUser={setUser} />} />
-                    <Route path="/sign-in" element={<SignIn />} />
+                    {/* <Route path="/sign-in" element={<SignIn />} /> */}
                     <Route
                         path="/keep/*"
                         element={<KeepApp user={user} setUser={setUser} />}

@@ -82,7 +82,7 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Remind me"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit !outline-slate-500">
+                                <button className="btn-sm btn-circle btn border-none bg-inherit">
                                     <MdOutlineNotificationAdd className="text-lg" />
                                 </button>
                             </div>
@@ -109,7 +109,10 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Add image"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit">
+                                <button
+                                    className="btn-sm btn-circle btn border-none bg-inherit"
+                                    disabled
+                                >
                                     <MdOutlineImage className="text-lg" />
                                 </button>
                             </div>
@@ -133,7 +136,10 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Undo"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit">
+                                <button
+                                    className="btn-sm btn-circle btn border-none bg-inherit"
+                                    disabled
+                                >
                                     <MdOutlineUndo className="text-lg" />
                                 </button>
                             </div>
@@ -141,7 +147,10 @@ const NoteComposer = ({
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                                 data-tip="Redo"
                             >
-                                <button className="btn-sm btn-circle btn border-none bg-inherit">
+                                <button
+                                    className="btn-sm btn-circle btn border-none bg-inherit"
+                                    disabled
+                                >
                                     <MdOutlineRedo className="text-lg" />
                                 </button>
                             </div>

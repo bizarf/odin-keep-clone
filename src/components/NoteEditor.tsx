@@ -7,6 +7,7 @@ import {
     MdOutlinePersonAddAlt,
     MdOutlinePalette,
     MdOutlineArchive,
+    MdOutlineUnarchive,
     MdOutlineMoreVert,
     MdOutlineUndo,
     MdOutlineRedo,
@@ -104,7 +105,7 @@ const NoteEditor = ({
             onClick={closeEdit}
         >
             <div
-                className="flex w-full flex-col rounded-lg border-[1px] border-solid bg-base-100 pl-2 sm:max-w-xl"
+                className="flex w-full flex-col rounded-lg border-[1px] border-solid bg-base-100 p-2 sm:max-w-xl"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex">
@@ -173,18 +174,46 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Add image"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit">
+                            <button
+                                className="btn-sm btn-circle btn border-none bg-inherit"
+                                disabled
+                            >
                                 <MdOutlineImage className="text-lg" />
                             </button>
                         </div>
-                        <div
+                        {/* <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Archive"
                         >
                             <button className="btn-sm btn-circle btn border-none bg-inherit">
                                 <MdOutlineArchive className="text-lg" />
                             </button>
-                        </div>
+                        </div> */}
+                        {currentNote?.isArchived ? (
+                            <div
+                                className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                                data-tip="Unarchive"
+                            >
+                                <button
+                                    className="btn-sm btn-circle btn border-none bg-inherit "
+                                    // onClick={() => unArchiveNote(index)}
+                                >
+                                    <MdOutlineUnarchive className="text-lg" />
+                                </button>
+                            </div>
+                        ) : (
+                            <div
+                                className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                                data-tip="Archive"
+                            >
+                                <button
+                                    className="btn-sm btn-circle btn border-none bg-inherit "
+                                    // onClick={() => moveToArchive(index)}
+                                >
+                                    <MdOutlineArchive className="text-lg" />
+                                </button>
+                            </div>
+                        )}
                         <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="More"
@@ -197,7 +226,10 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Undo"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit">
+                            <button
+                                className="btn-sm btn-circle btn border-none bg-inherit"
+                                disabled
+                            >
                                 <MdOutlineUndo className="text-lg" />
                             </button>
                         </div>
@@ -205,7 +237,10 @@ const NoteEditor = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="Redo"
                         >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit">
+                            <button
+                                className="btn-sm btn-circle btn border-none bg-inherit"
+                                disabled
+                            >
                                 <MdOutlineRedo className="text-lg" />
                             </button>
                         </div>

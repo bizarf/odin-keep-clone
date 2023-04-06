@@ -45,6 +45,16 @@
     background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+/* daisyui button overrides */
+.btn {
+    outline-width: 1px !important;
+    outline-color: #64748b !important;
+}
+
+.btn:disabled {
+    background-color: inherit !important;
+}
+
 .note--textarea {
     /* this adds the ellipsis to multiline text */
     display: -webkit-box;

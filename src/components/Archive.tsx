@@ -2,15 +2,61 @@ import React, { SetStateAction } from "react";
 import { NotesType } from "./KeepApp";
 import { MdOutlineArchive } from "react-icons/md";
 import NoteControls from "./NoteControls";
+import NoteEditor from "./NoteEditor";
 
 type Props = {
     notes: NotesType[];
     setNotes: React.Dispatch<SetStateAction<NotesType[]>>;
     gridView: boolean;
     mainMenuOpen: boolean;
+    editNoteBtn: (
+        note: {
+            title: string | undefined;
+            noteContent: string | undefined;
+            isPinned: boolean;
+            isArchived: boolean;
+            isTrash: boolean;
+        },
+        index: number
+    ) => void;
+    editNote: boolean;
+    setEditNote: React.Dispatch<React.SetStateAction<boolean>>;
+    currentNote:
+        | {
+              title: string | undefined;
+              noteContent: string | undefined;
+              isPinned: boolean;
+              isArchived: boolean;
+              isTrash: boolean;
+          }
+        | undefined;
+    setCurrentNote: React.Dispatch<
+        React.SetStateAction<
+            | {
+                  title: string | undefined;
+                  noteContent: string | undefined;
+                  isPinned: boolean;
+                  isArchived: boolean;
+                  isTrash: boolean;
+              }
+            | undefined
+        >
+    >;
+    currentIndex: number;
 };
 
-const Archive = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
+const Archive = ({
+    notes,
+    setNotes,
+    gridView,
+    mainMenuOpen,
+    editNoteBtn,
+    editNote,
+    setEditNote,
+    currentIndex,
+    currentNote,
+    setCurrentNote,
+}: Props) => {
     // grid and list view css
     let viewClass = "grid";
 
@@ -34,7 +80,10 @@ const Archive = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                 key={index}
                                 className="h-max border-2 border-solid"
                             >
-                                <div className="whitespace-pre-wrap break-all p-3">
+                                <div
+                                    className="whitespace-pre-wrap break-all p-3"
+                                    onClick={() => editNoteBtn(note, index)}
+                                >
                                     <div className="text-sm font-semibold">
                                         {note.title}
                                     </div>
@@ -47,6 +96,17 @@ const Archive = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                     notes={notes}
                                     setNotes={setNotes}
                                 />
+                                <div>
+                                    <NoteEditor
+                                        currentNote={currentNote}
+                                        currentIndex={currentIndex}
+                                        setCurrentNote={setCurrentNote}
+                                        editNote={editNote}
+                                        setEditNote={setEditNote}
+                                        notes={notes}
+                                        setNotes={setNotes}
+                                    />
+                                </div>
                             </div>
                         )
                 )}

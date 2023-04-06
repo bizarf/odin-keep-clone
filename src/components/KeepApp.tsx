@@ -256,6 +256,12 @@ const KeepApp = ({ user, setUser }: Props) => {
                             setNotes={setNotes}
                             gridView={gridView}
                             mainMenuOpen={mainMenuOpen}
+                            editNote={editNote}
+                            setEditNote={setEditNote}
+                            editNoteBtn={editNoteBtn}
+                            currentNote={currentNote}
+                            setCurrentNote={setCurrentNote}
+                            currentIndex={currentIndex}
                         />
                     }
                 />

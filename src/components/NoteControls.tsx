@@ -95,7 +95,10 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                 data-tip="Add image"
             >
-                <button className="btn-sm btn-circle btn border-none bg-inherit ">
+                <button
+                    className="btn-sm btn-circle btn border-none bg-inherit"
+                    disabled
+                >
                     <MdOutlineImage className="text-lg" />
                 </button>
             </div>
