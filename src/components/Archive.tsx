@@ -71,7 +71,7 @@ const Archive = ({
     }
 
     return (
-        <div>
+        <div className="overflow-y-auto">
             <div className={viewClass}>
                 {notes.map(
                     (note, index) =>

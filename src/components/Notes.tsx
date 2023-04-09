@@ -87,7 +87,7 @@ const Notes = ({
     }
 
     return (
-        <div>
+        <div className="overflow-y-auto">
             <NoteComposer
                 noteComposerOpen={noteComposerOpen}
                 setNoteComposerOpen={setNoteComposerOpen}

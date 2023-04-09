@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     MdOutlineDelete,
     MdDeleteForever,
     MdRestoreFromTrash,
 } from "react-icons/md";
 import { NotesType } from "./KeepApp";
+import NoteTrashViewer from "./NoteTrashViewer";
 
 type Props = {
     notes: NotesType[];
@@ -27,12 +28,20 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
     }
 
     const deleteNote = (index: number) => {
+        if (viewTrashNote) {
+            setViewTrashNote((state) => !state);
+        }
+
         const updatedNotes = notes;
         updatedNotes.splice(index, 1);
         setNotes([...updatedNotes]);
     };
 
     const restoreNote = (index: number) => {
+        if (viewTrashNote) {
+            setViewTrashNote((state) => !state);
+        }
+
         const updatedNotes = notes.map((note, i) => {
             if (i === index) {
                 note.isTrash = false;
@@ -44,8 +53,16 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
         setNotes([...updatedNotes]);
     };
 
+    const [viewTrashNote, setViewTrashNote] = useState(false);
+    const [trashIndex, setTrashIndex] = useState(0);
+
+    const viewTrashNoteBtn = (index: number) => {
+        setTrashIndex(index);
+        setViewTrashNote((state) => !state);
+    };
+
     return (
-        <div>
+        <div className="overflow-y-auto">
             <div className="flex justify-center p-6 italic">
                 Notes in Trash are deleted after 7 days.
             </div>
@@ -57,7 +74,10 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                 key={index}
                                 className="h-max border-2 border-solid"
                             >
-                                <div className="whitespace-pre-wrap break-all p-3">
+                                <div
+                                    className="whitespace-pre-wrap break-all p-3"
+                                    onClick={() => viewTrashNoteBtn(index)}
+                                >
                                     <div className="text-sm font-semibold">
                                         {note.title}
                                     </div>
@@ -90,6 +110,14 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                         </button>
                                     </div>
                                 </div>
+                                <NoteTrashViewer
+                                    viewTrashNote={viewTrashNote}
+                                    setViewTrashNote={setViewTrashNote}
+                                    trashIndex={trashIndex}
+                                    notes={notes}
+                                    deleteNote={deleteNote}
+                                    restoreNote={restoreNote}
+                                />
                             </div>
                         )
                 )}

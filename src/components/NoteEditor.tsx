@@ -181,14 +181,7 @@ const NoteEditor = ({
                                 <MdOutlineImage className="text-lg" />
                             </button>
                         </div>
-                        {/* <div
-                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                            data-tip="Archive"
-                        >
-                            <button className="btn-sm btn-circle btn border-none bg-inherit">
-                                <MdOutlineArchive className="text-lg" />
-                            </button>
-                        </div> */}
+                        {/* dynamic archive button options */}
                         {currentNote?.isArchived ? (
                             <div
                                 className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"

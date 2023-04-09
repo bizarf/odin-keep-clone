@@ -168,8 +168,8 @@ const Splash = ({ setUser }: Props) => {
                                     a list or in a grid
                                 </li>
                                 <li>
-                                    Refresh feature: Regathers current notes for
-                                    that user&39;s
+                                    Refresh feature: Fetches current notes for
+                                    that user&#39;s from Firebase database
                                 </li>
                                 <li>Dark mode toggle</li>
                             </ul>

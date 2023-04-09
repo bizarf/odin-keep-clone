@@ -76,7 +76,7 @@ const Header = ({
     };
 
     return (
-        <div className="col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
+        <div className="sticky top-0 col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
             {/* hamburg menu */}
             <div className="flex items-center pl-3">
                 <div
