@@ -25,8 +25,8 @@ const App = () => {
     return (
         <div>
             {/* <BrowserRouter basename="odin-keep-clone"> */}
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
-                {/* <HashRouter> */}
+            {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
+            <HashRouter>
                 <Routes>
                     <Route path="/" element={<Splash setUser={setUser} />} />
                     <Route
@@ -34,8 +34,8 @@ const App = () => {
                         element={<KeepApp user={user} setUser={setUser} />}
                     />
                 </Routes>
-                {/* </HashRouter> */}
-            </BrowserRouter>
+            </HashRouter>
+            {/* </BrowserRouter> */}
         </div>
     );
 };
