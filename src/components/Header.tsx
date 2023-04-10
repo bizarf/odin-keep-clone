@@ -63,15 +63,12 @@ const Header = ({
         const auth = getAuth(app);
         await signOut(auth)
             .then(() => {
-                console.log("signed out");
                 // set the user state back to null and send the user back to the splash page
                 setUser(null);
                 navigate("../");
-                // Sign-out successful.
             })
             .catch((error) => {
                 console.log(error);
-                // An error happened.
             });
     };
 

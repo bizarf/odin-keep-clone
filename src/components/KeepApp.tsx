@@ -139,7 +139,6 @@ const KeepApp = ({ user, setUser }: Props) => {
             onAuthStateChanged(auth, (googleUser) => {
                 if (googleUser) {
                     setUser(googleUser);
-                    // fetchUserData();
                 } else {
                     navigate("../");
                 }
@@ -157,14 +156,12 @@ const KeepApp = ({ user, setUser }: Props) => {
             setLoadingSpinner((state) => !state);
 
             if (docSnap.exists()) {
-                // console.log("Document data:", docSnap.data());
-                // console.log(docSnap.data().notes);
                 setNotes([...docSnap.data().notes]);
                 setTimeout(() => setLoadingSpinner((state) => !state), 1000);
                 setDataFetched((state) => !state);
             } else {
                 // doc.data() will be undefined in this case
-                console.log("No such document!");
+                // console.log("No such document!");
                 // create a new document that uses the user's google uid
                 await setDoc(doc(collection(db, "keep-data"), `${user?.uid}`), {
                     notes: notes,
@@ -176,7 +173,6 @@ const KeepApp = ({ user, setUser }: Props) => {
     };
 
     useEffect(() => {
-        console.log(user);
         // as soon as the user state is changed, we'll fetch firestore data
         if (user != null && user?.uid != "demo") {
             fetchUserData();
