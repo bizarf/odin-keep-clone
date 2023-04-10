@@ -27,7 +27,6 @@ const App = () => {
             <BrowserRouter basename="odin-keep-clone">
                 <Routes>
                     <Route path="/" element={<Splash setUser={setUser} />} />
-                    {/* <Route path="/sign-in" element={<SignIn />} /> */}
                     <Route
                         path="/keep/*"
                         element={<KeepApp user={user} setUser={setUser} />}

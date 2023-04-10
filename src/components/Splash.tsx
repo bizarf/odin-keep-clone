@@ -198,36 +198,69 @@ const Splash = ({ setUser }: Props) => {
                             </ul>
                         </div>
                     </div>
-                    <Carousel className="h-fit w-1/2 min-w-[50%] border-2">
+                    <Carousel
+                        className="h-fit w-1/2 min-w-[50%] border-2"
+                        infiniteLoop
+                    >
                         <div className="carousel-item relative w-full">
                             <img
                                 src={keepCloneNoteScreenshot}
                                 alt="A screenshot of the note area"
                             />
+                            <a
+                                href={keepCloneNoteScreenshot}
+                                className="legend"
+                            >
+                                The note area
+                            </a>
                         </div>
                         <div className="carousel-item relative w-full">
                             <img
                                 src={keepCloneComposerScreenshot}
-                                alt="A screenshot of the note area"
+                                alt="A screenshot of the note composer"
                             />
+                            <a
+                                href={keepCloneComposerScreenshot}
+                                className="legend"
+                            >
+                                The note composer
+                            </a>
                         </div>
                         <div className="carousel-item relative w-full">
                             <img
                                 src={keepCloneEditorScreenshot}
-                                alt="A screenshot of the note area"
+                                alt="A screenshot of the note editor"
                             />
+                            <a
+                                href={keepCloneEditorScreenshot}
+                                className="legend"
+                            >
+                                Note editor
+                            </a>
                         </div>
                         <div className="carousel-item relative w-full">
                             <img
                                 src={keepCloneArchiveScreenshot}
-                                alt="A screenshot of the note area"
+                                alt="A screenshot of the archive area"
                             />
+                            <a
+                                href={keepCloneArchiveScreenshot}
+                                className="legend"
+                            >
+                                Archive area
+                            </a>
                         </div>
                         <div className="carousel-item relative w-full">
                             <img
                                 src={keepCloneListDarkScreenshot}
-                                alt="A screenshot of the note area"
+                                alt="A screenshot of dark mode support and list viewing mode"
                             />
+                            <a
+                                href={keepCloneListDarkScreenshot}
+                                className="legend"
+                            >
+                                Dark mode support and list viewing mode
+                            </a>
                         </div>
                     </Carousel>
                 </div>
