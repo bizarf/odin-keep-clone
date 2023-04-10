@@ -245,11 +245,13 @@ const Header = ({
                                 className="btn-sm btn-circle avatar btn border-none bg-inherit"
                             >
                                 <div className="rounded-full">
-                                    <img
-                                        src={user?.photoURL}
-                                        alt="user avatar"
-                                        referrerPolicy="no-referrer"
-                                    />
+                                    {user?.photoURL && (
+                                        <img
+                                            src={user?.photoURL}
+                                            alt="user avatar"
+                                            referrerPolicy="no-referrer"
+                                        />
+                                    )}
                                 </div>
                             </label>
                             <ul
@@ -260,11 +262,13 @@ const Header = ({
                                     <div className="flex items-center py-1 px-4">
                                         <div className="avatar m-2">
                                             <div className="w-16 rounded-full">
-                                                <img
-                                                    src={user?.photoURL}
-                                                    alt="user avatar"
-                                                    referrerPolicy="no-referrer"
-                                                />
+                                                {user?.photoURL && (
+                                                    <img
+                                                        src={user?.photoURL}
+                                                        alt="user avatar"
+                                                        referrerPolicy="no-referrer"
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                         <div>
