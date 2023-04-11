@@ -2,7 +2,7 @@
 
 The goal of this project is to replicate my favorite website as close as possible. This will be a demonstration of all of hte skills that I have learned so far.
 
-[View the live site here](link goes here)
+[View the live site here](https://bizarf.github.io/odin-keep-clone/)
 
 To run this project on your local server, type:
 
