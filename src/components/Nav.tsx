@@ -96,92 +96,92 @@ const Nav = ({ mainMenuOpen, theme }: Props) => {
     }
 
     return (
-        <div className="py-2">
+        <nav className="py-2">
             {mainMenuOpen ? (
-                <div>
-                    <div
-                        className={`${noteNavBtnClass} flex cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
+                <div className="hidden sm:block">
+                    <button
+                        className={`${noteNavBtnClass} flex w-full cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
                         onClick={openNotes}
                         id="noteNavLong"
                     >
                         <MdLightbulbOutline className="text-2xl" />
                         <span className="pl-5">Notes</span>
-                    </div>
-                    <div
-                        className={`${remindersNavBtnClass} flex cursor-pointer items-center rounded-r-3xl  !bg-opacity-50 py-3 pr-24 pl-6`}
+                    </button>
+                    <button
+                        className={`${remindersNavBtnClass} flex w-full cursor-pointer items-center  rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
                         onClick={openReminders}
                         id="remindersNavLong"
                     >
                         <MdNotificationsNone className="text-2xl" />
                         <span className="pl-5">Reminders</span>
-                    </div>
-                    <div className="navEdit--label flex cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6">
+                    </button>
+                    <button className="navEdit--label flex w-full cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6">
                         <MdOutlineModeEditOutline className="text-2xl" />
                         <span className="pl-5">Edit Labels</span>
-                    </div>
-                    <div
-                        className={`${archiveNavBtnClass} flex cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
+                    </button>
+                    <button
+                        className={`${archiveNavBtnClass} flex w-full cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
                         onClick={openArchive}
                         id="archiveNavLong"
                     >
                         <MdOutlineArchive className="text-2xl" />
                         <span className="pl-5">Archive</span>
-                    </div>
-                    <div
-                        className={`${trashNavBtnClass} flex cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
+                    </button>
+                    <button
+                        className={`${trashNavBtnClass} flex w-full cursor-pointer items-center rounded-r-3xl !bg-opacity-50 py-3 pr-24 pl-6`}
                         onClick={openTrash}
                         id="trashNavLong"
                     >
                         <MdOutlineDelete className="text-2xl" />
                         <span className="pl-5">Trash</span>
-                    </div>
+                    </button>
                 </div>
             ) : (
                 <div>
                     <div className="pl-3">
-                        <div
+                        <button
                             className={`${noteNavBtnClass} btn-circle btn border-none !bg-opacity-50`}
                             onClick={openNotes}
                             id="noteNavSmall"
                         >
                             <MdLightbulbOutline className="text-2xl" />
-                        </div>
+                        </button>
                     </div>
                     <div className="pl-3">
-                        <div
+                        <button
                             className={`${remindersNavBtnClass} btn-circle btn border-none !bg-opacity-50`}
                             onClick={openReminders}
                             id="reminderNavSmall"
                         >
                             <MdNotificationsNone className="text-2xl" />
-                        </div>
+                        </button>
                     </div>
                     <div className="pl-3">
-                        <div className="btn-circle btn border-none !bg-opacity-50">
+                        <button className="btn-circle btn border-none !bg-opacity-50">
                             <MdOutlineModeEditOutline className="text-2xl" />
-                        </div>
+                        </button>
                     </div>
                     <div className="pl-3">
-                        <div
+                        <button
                             className={`${archiveNavBtnClass} btn-circle btn border-none !bg-opacity-50`}
                             onClick={openArchive}
                             id="archiveNavSmall"
                         >
                             <MdOutlineArchive className="text-2xl" />
-                        </div>
+                        </button>
                     </div>
                     <div className="pl-3">
-                        <div
+                        <button
                             className={`${trashNavBtnClass} btn-circle btn border-none !bg-opacity-50`}
                             onClick={openTrash}
                             id="trashNavSmall"
                         >
                             <MdOutlineDelete className="text-2xl" />
-                        </div>
+                        </button>
                     </div>
                 </div>
             )}
-        </div>
+        </nav>
     );
 };
 

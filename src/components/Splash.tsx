@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { app } from "./firebaseSetup";
 import { User } from "../App";
-import workspaceImage from "../assets/workspace.jpg";
+// import workspaceImage from "../assets/workspace.jpg";
 import { GoMarkGithub } from "react-icons/go";
 import keepCloneNoteScreenshot from "../assets/keep-clone-note.png";
 import keepCloneComposerScreenshot from "../assets/keep-clone-note-composer.png";
@@ -72,43 +72,47 @@ const Splash = ({ setUser }: Props) => {
 
     return (
         <div>
-            <div className="sticky top-0 z-20 flex justify-between">
+            <header className="sticky top-0 z-20 flex justify-between">
                 <div className="relative top-2 left-4 text-3xl text-white">
                     Keep Clone
                 </div>
                 <Link to={"https://github.com/bizarf"}>
-                    <GoMarkGithub className="relative top-2 right-4 text-3xl text-white" />
+                    <GoMarkGithub
+                        className="relative top-2 right-4 text-3xl text-white"
+                        aria-hidden
+                        focusable
+                    />
+                    <span className="sr-only">Bizarf's Github page</span>
                 </Link>
-            </div>
-            <div className="relative -mt-12 h-[32rem] w-full">
-                <img
-                    src={workspaceImage}
-                    alt="header banner image"
-                    className="h-full w-full object-cover"
-                />
-            </div>
-            <div className="absolute top-44 left-64 z-10 w-6/12">
-                <h2 className="text-5xl text-white">
-                    Save your thoughts, wherever you are
-                </h2>
-                <div className="mt-6">
-                    <button
-                        className="btn mr-6 rounded-sm border-0 !bg-blue-500 !text-white shadow-sm shadow-black"
-                        onClick={handleDemoLogin}
-                    >
-                        Demo mode
-                    </button>
-                    <button
-                        className="btn rounded-sm border-0 !bg-blue-500 !text-white shadow-sm shadow-black"
-                        onClick={googleSignInRedirect}
-                    >
-                        Google sign in
-                    </button>
+            </header>
+            <section
+                className={`relative -mt-12 h-[32rem] w-full bg-[url('./assets/workspace.jpg')] bg-cover`}
+            >
+                <div className="absolute top-44 left-10 z-10 w-80 sm:left-40 sm:w-6/12 md:left-56 lg:left-64">
+                    <h1 className="text-3xl text-white md:text-4xl lg:text-5xl">
+                        Save your thoughts, wherever you are
+                    </h1>
+                    <div className="mt-6">
+                        <button
+                            className="btn mr-6 rounded-sm border-0 !bg-blue-600 !text-white shadow-sm shadow-black"
+                            onClick={handleDemoLogin}
+                        >
+                            Demo mode
+                        </button>
+                        <button
+                            className="btn rounded-sm border-0 !bg-blue-600 !text-white shadow-sm shadow-black"
+                            onClick={googleSignInRedirect}
+                        >
+                            Google sign in
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className="mt-12 flex flex-col items-center">
-                <h3 className="mb-6 text-xl">Welcome to my Keep Clone app!</h3>
-                <div className="mx-11 flex justify-between">
+            </section>
+            <section className="mt-12">
+                <h2 className="mb-6 text-center text-xl font-bold">
+                    Welcome to my Keep Clone app!
+                </h2>
+                <div className="mx-3 flex flex-col sm:mx-11 md:flex-row md:justify-between">
                     <div>
                         <p>
                             This is a project to demonstrate all the skills I
@@ -117,9 +121,9 @@ const Splash = ({ setUser }: Props) => {
                             possible.
                         </p>
                         <div className="mt-6">
-                            <div className="text-lg font-bold">
+                            <h3 className="text-lg font-bold">
                                 Tools and technologies used:
-                            </div>
+                            </h3>
                             <ul className="list-inside list-disc">
                                 <li>React</li>
                                 <li>React Router</li>
@@ -141,9 +145,9 @@ const Splash = ({ setUser }: Props) => {
                             </ul>
                         </div>
                         <div className="mt-6">
-                            <div className="text-lg font-bold">
+                            <h3 className="text-lg font-bold">
                                 What&#39;s implemented:
-                            </div>
+                            </h3>
                             <ul className="list-inside list-disc">
                                 <li>
                                     Demo mode: Limited, as it doesn&#39;t have
@@ -175,9 +179,9 @@ const Splash = ({ setUser }: Props) => {
                             </ul>
                         </div>
                         <div className="mt-6">
-                            <div className="text-lg font-bold">
+                            <h3 className="text-lg font-bold">
                                 What hasn&#39;t been implemented:
-                            </div>
+                            </h3>
                             <ul className="list-inside list-disc">
                                 <li>Reminders</li>
                                 <li>Labeling</li>
@@ -199,72 +203,58 @@ const Splash = ({ setUser }: Props) => {
                         </div>
                     </div>
                     <Carousel
-                        className="h-fit w-1/2 min-w-[50%] border-2"
+                        className="mt-4 h-fit border-2 md:mt-0 md:w-1/2 md:min-w-[50%]"
                         infiniteLoop
                     >
                         <div className="carousel-item relative w-full">
-                            <img
-                                src={keepCloneNoteScreenshot}
-                                alt="A screenshot of the note area"
-                            />
+                            <img src={keepCloneNoteScreenshot} alt="" />
                             <a
                                 href={keepCloneNoteScreenshot}
                                 className="legend"
                             >
-                                The note area
+                                Preview of the note area
                             </a>
                         </div>
                         <div className="carousel-item relative w-full">
-                            <img
-                                src={keepCloneComposerScreenshot}
-                                alt="A screenshot of the note composer"
-                            />
+                            <img src={keepCloneComposerScreenshot} alt="" />
                             <a
                                 href={keepCloneComposerScreenshot}
                                 className="legend"
                             >
-                                The note composer
+                                Preview of the note composer
                             </a>
                         </div>
                         <div className="carousel-item relative w-full">
-                            <img
-                                src={keepCloneEditorScreenshot}
-                                alt="A screenshot of the note editor"
-                            />
+                            <img src={keepCloneEditorScreenshot} alt="" />
                             <a
                                 href={keepCloneEditorScreenshot}
                                 className="legend"
                             >
-                                Note editor
+                                Preview of the note editor
                             </a>
                         </div>
                         <div className="carousel-item relative w-full">
-                            <img
-                                src={keepCloneArchiveScreenshot}
-                                alt="A screenshot of the archive area"
-                            />
+                            <img src={keepCloneArchiveScreenshot} alt="" />
                             <a
                                 href={keepCloneArchiveScreenshot}
                                 className="legend"
                             >
-                                Archive area
+                                Preview of the archive area
                             </a>
                         </div>
                         <div className="carousel-item relative w-full">
-                            <img
-                                src={keepCloneListDarkScreenshot}
-                                alt="A screenshot of dark mode support and list viewing mode"
-                            />
+                            <img src={keepCloneListDarkScreenshot} alt="" />
                             <a
                                 href={keepCloneListDarkScreenshot}
                                 className="legend"
                             >
-                                Dark mode support and list viewing mode
+                                Preview of dark mode support and list viewing
+                                mode
                             </a>
                         </div>
                     </Carousel>
                 </div>
-            </div>
+            </section>
             {loadingSpinner && (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-20">
                     <div className="lds-dual-ring"></div>

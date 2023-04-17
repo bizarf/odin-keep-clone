@@ -48,7 +48,7 @@ const NoteComposer = ({
     };
 
     return (
-        <div className="mx-60 my-8 rounded-lg border-[1px] border-solid px-4 shadow-md">
+        <div className=" mx-[6%] my-8 max-w-[90%] rounded-lg border-[1px] border-solid px-4 shadow-md sm:mx-72 sm:max-w-2xl">
             {noteComposerOpen ? (
                 <div className="flex flex-col">
                     <div className="flex">

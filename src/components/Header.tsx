@@ -73,7 +73,7 @@ const Header = ({
     };
 
     return (
-        <div className="sticky top-0 col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
+        <header className="sticky top-0 col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
             {/* hamburg menu */}
             <div className="flex items-center pl-3">
                 <div
@@ -85,6 +85,7 @@ const Header = ({
                         onClick={toggleMainMenuView}
                     >
                         <MdMenu className="text-2xl" />
+                        <span className="sr-only">Hamburger menu</span>
                     </button>
                 </div>
                 {location.pathname === "/keep/notes" && (
@@ -114,10 +115,15 @@ const Header = ({
                 <button className=" btn-sm btn-circle btn m-2 border-none bg-inherit">
                     <MdOutlineSearch className="text-2xl" />
                 </button>
+                <label htmlFor="search-input" className="sr-only">
+                    Search
+                </label>
                 <input
-                    type="text"
+                    type="search"
                     placeholder="Search"
                     className="searchBar input w-full rounded-l-none bg-slate-100"
+                    id="search-input"
+                    aria-label="Search"
                 />
             </div>
             <div className="flex items-center">
@@ -291,7 +297,7 @@ const Header = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
     );
 };
 
