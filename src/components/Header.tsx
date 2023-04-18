@@ -73,7 +73,7 @@ const Header = ({
     };
 
     return (
-        <header className="sticky top-0 col-span-full grid grid-cols-[auto_1fr_auto] items-center justify-between border-b-[1px] border-solid">
+        <header className="sticky top-0 col-span-full flex flex-row items-center justify-between border-b-[1px] border-solid">
             {/* hamburg menu */}
             <div className="flex items-center pl-3">
                 <div
@@ -111,7 +111,7 @@ const Header = ({
                 )}
             </div>
             {/* search bar. non-functioning */}
-            <div className="searchBar flex w-8/12 items-center justify-self-center rounded-lg border-[1px] bg-slate-100">
+            <div className="searchBar hidden rounded-lg border-[1px] bg-slate-100 sm:flex sm:w-[calc(50%-6rem)]">
                 <button className=" btn-sm btn-circle btn m-2 border-none bg-inherit">
                     <MdOutlineSearch
                         className="text-2xl"
@@ -131,185 +131,171 @@ const Header = ({
                     aria-label="Search"
                 />
             </div>
-            <div className="flex items-center">
-                <div className="flex p-2 ">
+            <div className="flex items-center p-2 ">
+                <div
+                    className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                    data-tip="Refresh"
+                >
+                    <button
+                        className="btn-circle btn border-none bg-inherit"
+                        onClick={refreshBtn}
+                    >
+                        <MdRefresh className="text-2xl" aria-hidden focusable />
+                        <span className="sr-only">Refresh</span>
+                    </button>
+                </div>
+                {/* note layout controls */}
+                {gridView ? (
                     <div
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                        data-tip="Refresh"
+                        data-tip="List view"
                     >
                         <button
                             className="btn-circle btn border-none bg-inherit"
-                            onClick={refreshBtn}
+                            onClick={toggleNoteLayout}
                         >
-                            <MdRefresh
-                                className="text-2xl"
+                            <MdOutlineViewAgenda
+                                className="rounded-2xl text-2xl"
                                 aria-hidden
                                 focusable
                             />
-                            <span className="sr-only">Refresh</span>
+                            <span className="sr-only">List view</span>
                         </button>
                     </div>
-                    {/* note layout controls */}
-                    {gridView ? (
-                        <div
-                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                            data-tip="List view"
-                        >
-                            <button
-                                className="btn-circle btn border-none bg-inherit"
-                                onClick={toggleNoteLayout}
-                            >
-                                <MdOutlineViewAgenda
-                                    className="rounded-2xl text-2xl"
-                                    aria-hidden
-                                    focusable
-                                />
-                                <span className="sr-only">List view</span>
-                            </button>
-                        </div>
-                    ) : (
-                        <div
-                            className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                            data-tip="Grid view"
-                        >
-                            <button
-                                className="btn-circle btn border-none bg-inherit"
-                                onClick={toggleNoteLayout}
-                            >
-                                <MdGridView
-                                    className="rounded-2xl text-2xl"
-                                    aria-hidden
-                                    focusable
-                                />
-                            </button>
-                            <span className="sr-only">Grid view</span>
-                        </div>
-                    )}
-                    {/* settings area */}
+                ) : (
                     <div
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
-                        data-tip="Settings"
+                        data-tip="Grid view"
                     >
-                        <div className="dropdown-end dropdown">
-                            <label
-                                tabIndex={0}
-                                className="btn-circle btn border-none bg-inherit"
-                            >
-                                <MdOutlineSettings className="rounded-2xl text-2xl" />
-                            </label>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
-                            >
-                                <li className="py-1 px-4 hover:bg-gray-200">
-                                    <div className="text-sm">Settings</div>
-                                </li>
-                                {/* dark mode toggle */}
-                                {theme === "light" ? (
-                                    <li
-                                        className="py-1 px-4 hover:bg-gray-200"
-                                        onClick={() => {
-                                            localStorage.setItem(
-                                                "theme",
-                                                "dark"
-                                            );
-                                            setTheme("dark");
-                                        }}
-                                    >
-                                        <div className="text-sm">
-                                            Enable dark theme
-                                        </div>
-                                    </li>
-                                ) : (
-                                    <li
-                                        className="py-1 px-4 hover:bg-gray-200"
-                                        onClick={() => {
-                                            localStorage.setItem(
-                                                "theme",
-                                                "light"
-                                            );
-                                            setTheme("light");
-                                        }}
-                                    >
-                                        <div className="text-sm">
-                                            Disable dark theme
-                                        </div>
-                                    </li>
-                                )}
-                                <li className="py-1 px-4 hover:bg-gray-200">
-                                    <div className="text-sm">Send feedback</div>
-                                </li>
-                                <li className="py-1 px-4 hover:bg-gray-200">
-                                    <div className="text-sm">Help</div>
-                                </li>
-                                <li className="py-1 px-4 hover:bg-gray-200">
-                                    <div className="text-sm">App downloads</div>
-                                </li>
-                                <li className="py-1 px-4 hover:bg-gray-200">
+                        <button
+                            className="btn-circle btn border-none bg-inherit"
+                            onClick={toggleNoteLayout}
+                        >
+                            <MdGridView
+                                className="rounded-2xl text-2xl"
+                                aria-hidden
+                                focusable
+                            />
+                        </button>
+                        <span className="sr-only">Grid view</span>
+                    </div>
+                )}
+                {/* settings area */}
+                <div
+                    className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
+                    data-tip="Settings"
+                >
+                    <div className="dropdown-end dropdown">
+                        <label
+                            tabIndex={0}
+                            className="btn-circle btn border-none bg-inherit"
+                        >
+                            <MdOutlineSettings className="rounded-2xl text-2xl" />
+                        </label>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
+                        >
+                            <li className="py-1 px-4 hover:bg-gray-200">
+                                <div className="text-sm">Settings</div>
+                            </li>
+                            {/* dark mode toggle */}
+                            {theme === "light" ? (
+                                <li
+                                    className="py-1 px-4 hover:bg-gray-200"
+                                    onClick={() => {
+                                        localStorage.setItem("theme", "dark");
+                                        setTheme("dark");
+                                    }}
+                                >
                                     <div className="text-sm">
-                                        Keyboard shortcuts
+                                        Enable dark theme
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
+                            ) : (
+                                <li
+                                    className="py-1 px-4 hover:bg-gray-200"
+                                    onClick={() => {
+                                        localStorage.setItem("theme", "light");
+                                        setTheme("light");
+                                    }}
+                                >
+                                    <div className="text-sm">
+                                        Disable dark theme
+                                    </div>
+                                </li>
+                            )}
+                            <li className="py-1 px-4 hover:bg-gray-200">
+                                <div className="text-sm">Send feedback</div>
+                            </li>
+                            <li className="py-1 px-4 hover:bg-gray-200">
+                                <div className="text-sm">Help</div>
+                            </li>
+                            <li className="py-1 px-4 hover:bg-gray-200">
+                                <div className="text-sm">App downloads</div>
+                            </li>
+                            <li className="py-1 px-4 hover:bg-gray-200">
+                                <div className="text-sm">
+                                    Keyboard shortcuts
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    {/* user avatar area */}
-                    <div className="flex items-center pr-4">
-                        <div
-                            className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
-                            data-tip={`Google account
+                </div>
+                {/* user avatar area */}
+                <div
+                    className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
+                    data-tip={`Google account
                         ${user?.displayName}
                         ${user?.email}`}
+                >
+                    <div className="dropdown-end dropdown px-4">
+                        <button className="btn-sm btn-circle btn mt-1 border-none bg-inherit">
+                            {user?.photoURL && (
+                                <img
+                                    src={user?.photoURL}
+                                    alt="user avatar"
+                                    referrerPolicy="no-referrer"
+                                    className="rounded-full"
+                                />
+                            )}
+                        </button>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
                         >
-                            <div className="dropdown-end dropdown">
-                                <button className="btn-sm btn-circle avatar btn border-none bg-inherit">
-                                    {user?.photoURL && (
-                                        <img
-                                            src={user?.photoURL}
-                                            alt="user avatar"
-                                            referrerPolicy="no-referrer"
-                                            className="rounded-full"
-                                        />
-                                    )}
-                                </button>
-                                <ul
-                                    tabIndex={0}
-                                    className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
-                                >
-                                    <div className="bg-base-100">
-                                        <div className="flex items-center py-1 px-4">
-                                            <div className="avatar m-2">
-                                                <div className="w-16 rounded-full">
-                                                    {user?.photoURL && (
-                                                        <img
-                                                            src={user?.photoURL}
-                                                            alt="user avatar"
-                                                            referrerPolicy="no-referrer"
-                                                        />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="text-sm font-semibold">{`${user?.displayName}`}</div>
-                                                <div className="text-xs">{`${user?.email}`}</div>
-                                            </div>
+                            <div className="bg-base-100">
+                                <div className="flex items-center py-1 px-4">
+                                    <div className="avatar m-2">
+                                        <div className="w-16 rounded-full">
+                                            {user?.photoURL && (
+                                                <img
+                                                    src={user?.photoURL}
+                                                    alt="user avatar"
+                                                    referrerPolicy="no-referrer"
+                                                />
+                                            )}
                                         </div>
-                                        <div className="divider m-0"></div>
-                                        <li className="py-1 px-4 hover:bg-gray-200">
-                                            <div className="text-sm">
-                                                Add another account
-                                            </div>
-                                        </li>
                                     </div>
-                                    <li
-                                        className="py-1 px-4 hover:bg-gray-200"
-                                        onClick={googleSignOut}
-                                    >
-                                        <div className="text-sm">Sign out</div>
-                                    </li>
-                                </ul>
+                                    <div>
+                                        <div className="text-sm font-semibold">{`${user?.displayName}`}</div>
+                                        <div className="text-xs">{`${user?.email}`}</div>
+                                    </div>
+                                </div>
+                                <div className="divider m-0"></div>
+                                <li className="py-1 px-4 hover:bg-gray-200">
+                                    <div className="text-sm">
+                                        Add another account
+                                    </div>
+                                </li>
                             </div>
-                        </div>
+                            <li
+                                className="py-1 px-4 hover:bg-gray-200"
+                                onClick={googleSignOut}
+                            >
+                                <div className="text-sm">Sign out</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
