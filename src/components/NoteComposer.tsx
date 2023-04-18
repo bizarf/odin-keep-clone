@@ -52,29 +52,50 @@ const NoteComposer = ({
             {noteComposerOpen ? (
                 <div className="flex flex-col">
                     <div className="flex">
+                        <label htmlFor="noteTitle" className="sr-only">
+                            Note Title
+                        </label>
                         <input
                             type="text"
                             placeholder="Title"
                             className="flex-1 bg-inherit font-semibold focus:outline-none"
                             id="noteTitle"
+                            aria-label="Note Title"
                         />
-                        <div
-                            className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black"
+                        <button
+                            className="btn-circle btn border-none bg-inherit"
                             id="pinBtn"
                             onClick={() => setIsPinned((state) => !state)}
                         >
                             {isPinned ? (
-                                <MdPushPin className="text-2xl" />
+                                <MdPushPin
+                                    className="text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
                             ) : (
-                                <MdOutlinePushPin className="text-2xl" />
+                                <MdOutlinePushPin
+                                    className="text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
                             )}
-                        </div>
+                            {isPinned ? (
+                                <span className="sr-only">Pinned note</span>
+                            ) : (
+                                <span className="sr-only">Unpinned note</span>
+                            )}
+                        </button>
                     </div>
+                    <label htmlFor="noteContent" className="sr-only">
+                        Note Content
+                    </label>
                     <TextareaResize
                         placeholder="Take a note..."
                         className="resize-none bg-inherit text-sm focus:outline-none"
                         id="noteContent"
                         maxRows={20}
+                        aria-label="Note content"
                     ></TextareaResize>
                     <div className="flex items-center justify-between py-2">
                         <div className="flex w-4/6 justify-between">
@@ -83,7 +104,14 @@ const NoteComposer = ({
                                 data-tip="Remind me"
                             >
                                 <button className="btn-sm btn-circle btn border-none bg-inherit">
-                                    <MdOutlineNotificationAdd className="text-lg" />
+                                    <MdOutlineNotificationAdd
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">
+                                        Set reminder
+                                    </span>
                                 </button>
                             </div>
                             <div
@@ -94,7 +122,14 @@ const NoteComposer = ({
                                     className="btn-sm btn-circle btn border-none bg-inherit"
                                     disabled
                                 >
-                                    <MdOutlinePersonAddAlt className="text-lg" />
+                                    <MdOutlinePersonAddAlt
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">
+                                        Set collaborator
+                                    </span>
                                 </button>
                             </div>
                             <div
@@ -102,7 +137,14 @@ const NoteComposer = ({
                                 data-tip="Background options"
                             >
                                 <button className="btn-sm btn-circle btn border-none bg-inherit">
-                                    <MdOutlinePalette className="text-lg" />
+                                    <MdOutlinePalette
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">
+                                        Background options
+                                    </span>
                                 </button>
                             </div>
                             <div
@@ -113,7 +155,12 @@ const NoteComposer = ({
                                     className="btn-sm btn-circle btn border-none bg-inherit"
                                     disabled
                                 >
-                                    <MdOutlineImage className="text-lg" />
+                                    <MdOutlineImage
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">Add image</span>
                                 </button>
                             </div>
                             <div
@@ -121,7 +168,12 @@ const NoteComposer = ({
                                 data-tip="Archive"
                             >
                                 <button className="btn-sm btn-circle btn border-none bg-inherit">
-                                    <MdOutlineArchive className="text-lg" />
+                                    <MdOutlineArchive
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">Archive</span>
                                 </button>
                             </div>
                             <div
@@ -129,7 +181,12 @@ const NoteComposer = ({
                                 data-tip="More"
                             >
                                 <button className="btn-sm btn-circle btn border-none bg-inherit">
-                                    <MdOutlineMoreVert className="text-lg" />
+                                    <MdOutlineMoreVert
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">More</span>
                                 </button>
                             </div>
                             <div
@@ -140,7 +197,12 @@ const NoteComposer = ({
                                     className="btn-sm btn-circle btn border-none bg-inherit"
                                     disabled
                                 >
-                                    <MdOutlineUndo className="text-lg" />
+                                    <MdOutlineUndo
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">Undo</span>
                                 </button>
                             </div>
                             <div
@@ -151,16 +213,21 @@ const NoteComposer = ({
                                     className="btn-sm btn-circle btn border-none bg-inherit"
                                     disabled
                                 >
-                                    <MdOutlineRedo className="text-lg" />
+                                    <MdOutlineRedo
+                                        className="text-lg"
+                                        aria-hidden
+                                        focusable
+                                    />
+                                    <span className="sr-only">Redo</span>
                                 </button>
                             </div>
                         </div>
-                        <div
-                            className="btn-sm btn border-none bg-inherit px-6 text-slate-500 hover:bg-slate-100 hover:text-black"
+                        <button
+                            className="btn-sm btn border-none bg-inherit px-6"
                             onClick={closeNote}
                         >
                             Close
-                        </div>
+                        </button>
                     </div>
                 </div>
             ) : (
@@ -176,24 +243,43 @@ const NoteComposer = ({
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="New list"
                         >
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineCheckBox className="text-2xl" />
+                            <button className="btn-circle btn border-none bg-inherit">
+                                <MdOutlineCheckBox
+                                    className="text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">New list</span>
                             </button>
                         </div>
                         <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="New note with drawing"
                         >
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineBrush className="text-2xl" />
+                            <button className="btn-circle btn border-none bg-inherit">
+                                <MdOutlineBrush
+                                    className="text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">
+                                    New note with drawing
+                                </span>
                             </button>
                         </div>
                         <div
                             className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"
                             data-tip="New note with image"
                         >
-                            <button className="btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-100 hover:text-black ">
-                                <MdOutlineImage className="text-2xl" />
+                            <button className="btn-circle btn border-none bg-inherit">
+                                <MdOutlineImage
+                                    className="text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">
+                                    New note with image
+                                </span>
                             </button>
                         </div>
                     </div>

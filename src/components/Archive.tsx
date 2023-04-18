@@ -78,7 +78,7 @@ const Archive = ({
                         note.isArchived && (
                             <div
                                 key={index}
-                                className="h-max border-2 border-solid"
+                                className="h-max rounded-lg border-[1px] border-solid"
                             >
                                 <div
                                     className="whitespace-pre-wrap break-all p-3"
@@ -115,7 +115,10 @@ const Archive = ({
                 <div key={"empty"} className="h-full">
                     <div className="flex h-3/4 flex-col items-center justify-center">
                         <div>
-                            <MdOutlineArchive className="text-9xl text-slate-200" />
+                            <MdOutlineArchive
+                                className="text-9xl text-slate-200"
+                                aria-aria-hidden
+                            />
                         </div>
                         <div className="text-xl">
                             Your archived notes appear here

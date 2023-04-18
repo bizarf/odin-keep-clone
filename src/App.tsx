@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    HashRouter,
+    createBrowserRouter,
+    createRoutesFromElements,
+} from "react-router-dom";
 import "./App.css";
 import Splash from "./components/Splash";
 import KeepApp from "./components/KeepApp";

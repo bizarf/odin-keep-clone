@@ -69,7 +69,12 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="Remind me"
             >
                 <button className="btn-sm btn-circle btn border-none bg-inherit ">
-                    <MdOutlineNotificationAdd className="text-lg" />
+                    <MdOutlineNotificationAdd
+                        className="text-lg"
+                        aria-hidden
+                        focusable
+                    />
+                    <span className="sr-only">Set reminder</span>
                 </button>
             </div>
             <div
@@ -80,7 +85,12 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                     className="btn-sm btn-circle btn border-none bg-inherit disabled:cursor-not-allowed disabled:bg-inherit"
                     disabled
                 >
-                    <MdOutlinePersonAddAlt className="text-lg" />
+                    <MdOutlinePersonAddAlt
+                        className="text-lg"
+                        aria-hidden
+                        focusable
+                    />
+                    <span className="sr-only">Set collaborator</span>
                 </button>
             </div>
             <div
@@ -88,7 +98,12 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="Background options"
             >
                 <button className="btn-sm btn-circle btn border-none bg-inherit ">
-                    <MdOutlinePalette className="text-lg" />
+                    <MdOutlinePalette
+                        className="text-lg"
+                        aria-hidden
+                        focusable
+                    />
+                    <span className="sr-only">Background options</span>
                 </button>
             </div>
             <div
@@ -99,7 +114,8 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                     className="btn-sm btn-circle btn border-none bg-inherit"
                     disabled
                 >
-                    <MdOutlineImage className="text-lg" />
+                    <MdOutlineImage className="text-lg" aria-hidden focusable />
+                    <span className="sr-only">Add image</span>
                 </button>
             </div>
             {/* if the note is archived, then change the archive button for an unarchive button */}
@@ -112,7 +128,12 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                         className="btn-sm btn-circle btn border-none bg-inherit "
                         onClick={() => unArchiveNote(index)}
                     >
-                        <MdOutlineUnarchive className="text-lg" />
+                        <MdOutlineUnarchive
+                            className="text-lg"
+                            aria-hidden
+                            focusable
+                        />
+                        <span className="sr-only">Unarchive</span>
                     </button>
                 </div>
             ) : (
@@ -124,7 +145,12 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                         className="btn-sm btn-circle btn border-none bg-inherit "
                         onClick={() => moveToArchive(index)}
                     >
-                        <MdOutlineArchive className="text-lg" />
+                        <MdOutlineArchive
+                            className="text-lg"
+                            aria-hidden
+                            focusable
+                        />
+                        <span className="sr-only">Archive</span>
                     </button>
                 </div>
             )}

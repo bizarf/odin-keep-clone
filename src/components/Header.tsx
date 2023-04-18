@@ -81,7 +81,7 @@ const Header = ({
                     data-tip="Main menu"
                 >
                     <button
-                        className="btn-circle btn border-none bg-inherit text-slate-600 hover:bg-slate-200 hover:text-black"
+                        className="btn-circle btn border-none bg-inherit"
                         onClick={toggleMainMenuView}
                     >
                         <MdMenu className="text-2xl" />
@@ -91,29 +91,34 @@ const Header = ({
                 {location.pathname === "/keep/notes" && (
                     <div className="flex items-center">
                         <MdTask className="text-5xl text-yellow-400" />
-                        <div className="text-xl">Keep</div>
+                        <h1 className="text-xl">Keep</h1>
                     </div>
                 )}
                 {location.pathname === "/keep/" && (
                     <div className="flex items-center">
                         <MdTask className="text-5xl text-yellow-400" />
-                        <div className="text-xl">Keep</div>
+                        <h1 className="text-xl">Keep</h1>
                     </div>
                 )}
                 {location.pathname === "/keep/reminders" && (
-                    <div className="text-xl">Reminders</div>
+                    <h1 className="text-xl">Reminders</h1>
                 )}
                 {location.pathname === "/keep/archive" && (
-                    <div className="text-xl">Archive</div>
+                    <h1 className="text-xl">Archive</h1>
                 )}
                 {location.pathname === "/keep/trash" && (
-                    <div className="text-xl">Trash</div>
+                    <h1 className="text-xl">Trash</h1>
                 )}
             </div>
             {/* search bar. non-functioning */}
             <div className="searchBar flex w-8/12 items-center justify-self-center rounded-lg border-[1px] bg-slate-100">
                 <button className=" btn-sm btn-circle btn m-2 border-none bg-inherit">
-                    <MdOutlineSearch className="text-2xl" />
+                    <MdOutlineSearch
+                        className="text-2xl"
+                        aria-hidden
+                        focusable
+                    />
+                    <span className="sr-only">Search</span>
                 </button>
                 <label htmlFor="search-input" className="sr-only">
                     Search
@@ -136,7 +141,12 @@ const Header = ({
                             className="btn-circle btn border-none bg-inherit"
                             onClick={refreshBtn}
                         >
-                            <MdRefresh className="text-2xl" />
+                            <MdRefresh
+                                className="text-2xl"
+                                aria-hidden
+                                focusable
+                            />
+                            <span className="sr-only">Refresh</span>
                         </button>
                     </div>
                     {/* note layout controls */}
@@ -149,7 +159,12 @@ const Header = ({
                                 className="btn-circle btn border-none bg-inherit"
                                 onClick={toggleNoteLayout}
                             >
-                                <MdOutlineViewAgenda className="rounded-2xl text-2xl" />
+                                <MdOutlineViewAgenda
+                                    className="rounded-2xl text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">List view</span>
                             </button>
                         </div>
                     ) : (
@@ -161,8 +176,13 @@ const Header = ({
                                 className="btn-circle btn border-none bg-inherit"
                                 onClick={toggleNoteLayout}
                             >
-                                <MdGridView className="rounded-2xl text-2xl" />
+                                <MdGridView
+                                    className="rounded-2xl text-2xl"
+                                    aria-hidden
+                                    focusable
+                                />
                             </button>
+                            <span className="sr-only">Grid view</span>
                         </div>
                     )}
                     {/* settings area */}
@@ -233,66 +253,62 @@ const Header = ({
                             </ul>
                         </div>
                     </div>
-                </div>
-                {/* user avatar area */}
-                <div className="flex items-center pr-4">
-                    <div
-                        className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
-                        data-tip={`Google account
+                    {/* user avatar area */}
+                    <div className="flex items-center pr-4">
+                        <div
+                            className="tooltip tooltip-bottom whitespace-pre-line text-start [--tooltip-tail:0px] before:-left-12 before:text-xs"
+                            data-tip={`Google account
                         ${user?.displayName}
                         ${user?.email}`}
-                    >
-                        <div className="dropdown-end dropdown">
-                            <label
-                                tabIndex={0}
-                                className="btn-sm btn-circle avatar btn border-none bg-inherit"
-                            >
-                                <div className="rounded-full">
+                        >
+                            <div className="dropdown-end dropdown">
+                                <button className="btn-sm btn-circle avatar btn border-none bg-inherit">
                                     {user?.photoURL && (
                                         <img
                                             src={user?.photoURL}
                                             alt="user avatar"
                                             referrerPolicy="no-referrer"
+                                            className="rounded-full"
                                         />
                                     )}
-                                </div>
-                            </label>
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
-                            >
-                                <div className="bg-base-100">
-                                    <div className="flex items-center py-1 px-4">
-                                        <div className="avatar m-2">
-                                            <div className="w-16 rounded-full">
-                                                {user?.photoURL && (
-                                                    <img
-                                                        src={user?.photoURL}
-                                                        alt="user avatar"
-                                                        referrerPolicy="no-referrer"
-                                                    />
-                                                )}
+                                </button>
+                                <ul
+                                    tabIndex={0}
+                                    className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
+                                >
+                                    <div className="bg-base-100">
+                                        <div className="flex items-center py-1 px-4">
+                                            <div className="avatar m-2">
+                                                <div className="w-16 rounded-full">
+                                                    {user?.photoURL && (
+                                                        <img
+                                                            src={user?.photoURL}
+                                                            alt="user avatar"
+                                                            referrerPolicy="no-referrer"
+                                                        />
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="text-sm font-semibold">{`${user?.displayName}`}</div>
+                                                <div className="text-xs">{`${user?.email}`}</div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div className="text-sm font-semibold">{`${user?.displayName}`}</div>
-                                            <div className="text-xs">{`${user?.email}`}</div>
-                                        </div>
+                                        <div className="divider m-0"></div>
+                                        <li className="py-1 px-4 hover:bg-gray-200">
+                                            <div className="text-sm">
+                                                Add another account
+                                            </div>
+                                        </li>
                                     </div>
-                                    <div className="divider m-0"></div>
-                                    <li className="py-1 px-4 hover:bg-gray-200">
-                                        <div className="text-sm">
-                                            Add another account
-                                        </div>
+                                    <li
+                                        className="py-1 px-4 hover:bg-gray-200"
+                                        onClick={googleSignOut}
+                                    >
+                                        <div className="text-sm">Sign out</div>
                                     </li>
-                                </div>
-                                <li
-                                    className="py-1 px-4 hover:bg-gray-200"
-                                    onClick={googleSignOut}
-                                >
-                                    <div className="text-sm">Sign out</div>
-                                </li>
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

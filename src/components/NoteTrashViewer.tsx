@@ -32,19 +32,25 @@ const NoteTrashViewer = ({
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex">
+                    <label htmlFor="noteTitleTrash" className="sr-only">
+                        Note Title
+                    </label>
                     <input
                         type="text"
                         placeholder="Title"
                         className="w-full bg-inherit px-2 font-semibold focus:outline-none"
-                        id="noteTitleEdit"
+                        id="noteTitleTrash"
                         value={notes[trashIndex].title}
                         readOnly
                     />
                 </div>
+                <label htmlFor="noteContentTrash" className="sr-only">
+                    Note Content
+                </label>
                 <TextareaAutoresize
                     placeholder="Take a note..."
                     className="resize-none bg-inherit p-2 focus:outline-none"
-                    id="noteContentEdit"
+                    id="noteContentTrash"
                     value={notes[trashIndex].noteContent}
                     maxRows={20}
                     readOnly
@@ -57,10 +63,15 @@ const NoteTrashViewer = ({
                             data-tip="Delete forever"
                         >
                             <button
-                                className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black "
+                                className="btn-sm btn-circle btn border-none bg-inherit"
                                 onClick={() => deleteNote(trashIndex)}
                             >
-                                <MdDeleteForever className="text-base" />
+                                <MdDeleteForever
+                                    className="text-base"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">Delete forever</span>
                             </button>
                         </div>
                         <div
@@ -68,19 +79,24 @@ const NoteTrashViewer = ({
                             data-tip="Restore"
                         >
                             <button
-                                className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black"
+                                className="btn-sm btn-circle btn border-none bg-inherit"
                                 onClick={() => restoreNote(trashIndex)}
                             >
-                                <MdRestoreFromTrash className="text-base" />
+                                <MdRestoreFromTrash
+                                    className="text-base"
+                                    aria-hidden
+                                    focusable
+                                />
+                                <span className="sr-only">Restore</span>
                             </button>
                         </div>
                     </div>
-                    <div
+                    <button
                         className="btn-sm btn border-none bg-inherit px-6"
                         onClick={() => setViewTrashNote((state) => !state)}
                     >
                         Close
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

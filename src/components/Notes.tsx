@@ -120,11 +120,14 @@ const Notes = ({
                                                     )
                                                 }
                                             >
-                                                {note.isPinned ? (
-                                                    <MdPushPin className="text-2xl" />
-                                                ) : (
-                                                    <MdOutlinePushPin className="text-2xl" />
-                                                )}
+                                                <MdPushPin
+                                                    className="text-2xl"
+                                                    aria-hidden
+                                                    focusable
+                                                />
+                                                <span className="sr-only">
+                                                    Pinned note
+                                                </span>
                                             </button>
                                         </div>
                                         <div
@@ -178,6 +181,9 @@ const Notes = ({
                                         }
                                     >
                                         <MdOutlinePushPin className="text-2xl" />
+                                        <span className="sr-only">
+                                            Unpinned note
+                                        </span>
                                     </button>
                                 </div>
                                 <div
@@ -197,20 +203,20 @@ const Notes = ({
                                     notes={notes}
                                     setNotes={setNotes}
                                 />
-                                <div>
-                                    <NoteEditor
-                                        currentNote={currentNote}
-                                        currentIndex={currentIndex}
-                                        setCurrentNote={setCurrentNote}
-                                        editNote={editNote}
-                                        setEditNote={setEditNote}
-                                        notes={notes}
-                                        setNotes={setNotes}
-                                    />
-                                </div>
                             </div>
                         )
                 )}
+                <div>
+                    <NoteEditor
+                        currentNote={currentNote}
+                        currentIndex={currentIndex}
+                        setCurrentNote={setCurrentNote}
+                        editNote={editNote}
+                        setEditNote={setEditNote}
+                        notes={notes}
+                        setNotes={setNotes}
+                    />
+                </div>
             </div>
         </div>
     );

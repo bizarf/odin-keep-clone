@@ -72,7 +72,7 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                         note.isTrash && (
                             <div
                                 key={index}
-                                className="h-max border-2 border-solid"
+                                className="h-max rounded-lg border-[1px] border-solid"
                             >
                                 <div
                                     className="whitespace-pre-wrap break-all p-3"
@@ -92,10 +92,17 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                         data-tip="Delete forever"
                                     >
                                         <button
-                                            className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black "
+                                            className="btn-sm btn-circle btn border-none bg-inherit "
                                             onClick={() => deleteNote(index)}
                                         >
-                                            <MdDeleteForever className="text-base" />
+                                            <MdDeleteForever
+                                                className="text-base"
+                                                aria-hidden
+                                                focusable
+                                            />
+                                            <span className="sr-only">
+                                                Delete forever
+                                            </span>
                                         </button>
                                     </div>
                                     <div
@@ -103,10 +110,17 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                         data-tip="Restore"
                                     >
                                         <button
-                                            className="btn-sm btn-circle btn border-none bg-inherit text-slate-500 hover:bg-slate-200 hover:text-black"
+                                            className="btn-sm btn-circle btn border-none bg-inherit"
                                             onClick={() => restoreNote(index)}
                                         >
-                                            <MdRestoreFromTrash className="text-base" />
+                                            <MdRestoreFromTrash
+                                                className="text-base"
+                                                aria-hidden
+                                                focusable
+                                            />
+                                            <span className="sr-only">
+                                                Restore
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
@@ -127,7 +141,10 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                 <div key={"empty"} className="h-full">
                     <div className="flex h-3/4 flex-col items-center justify-center">
                         <div>
-                            <MdOutlineDelete className="text-9xl text-slate-200" />
+                            <MdOutlineDelete
+                                className="text-9xl text-slate-200"
+                                aria-hidden
+                            />
                         </div>
                         <div className="text-xl">No notes in Trash</div>
                     </div>

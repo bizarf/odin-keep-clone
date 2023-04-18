@@ -45,6 +45,10 @@
     background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+[data-theme="light"] .searchBar::placeholder {
+    color: #475569;
+}
+
 /* daisyui button overrides */
 .btn {
     outline-width: 1px !important;
