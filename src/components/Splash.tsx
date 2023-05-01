@@ -10,11 +10,11 @@ import { app } from "./firebaseSetup";
 import { User } from "../App";
 // import workspaceImage from "../assets/workspace.jpg";
 import { GoMarkGithub } from "react-icons/go";
-import keepCloneNoteScreenshot from "../assets/keep-clone-note.png";
-import keepCloneComposerScreenshot from "../assets/keep-clone-note-composer.png";
-import keepCloneEditorScreenshot from "../assets/keep-clone-note-editor.png";
-import keepCloneArchiveScreenshot from "../assets/keep-clone-note-archive.png";
-import keepCloneListDarkScreenshot from "../assets/keep-clone-note-list-dark.png";
+import keepCloneNoteScreenshot from "../assets/keep-clone-note.webp";
+import keepCloneComposerScreenshot from "../assets/keep-clone-note-composer.webp";
+import keepCloneEditorScreenshot from "../assets/keep-clone-note-editor.webp";
+import keepCloneArchiveScreenshot from "../assets/keep-clone-note-archive.webp";
+import keepCloneListDarkScreenshot from "../assets/keep-clone-note-list-dark.webp";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -57,7 +57,7 @@ const Splash = ({ setUser }: Props) => {
         isAnonymous: false,
         metadata: { demo: "demo" },
         phoneNumber: "0",
-        photoURL: "../assets/demo-avatar.png",
+        photoURL: "../assets/demo-avatar.webp",
         providerData: [{ demo: "demo" }],
         providerId: "",
         tenantId: "",
@@ -86,7 +86,7 @@ const Splash = ({ setUser }: Props) => {
                 </Link>
             </header>
             <section
-                className={`relative -mt-12 h-[32rem] w-full bg-[url('./assets/workspace.jpg')] bg-cover`}
+                className={`relative -mt-12 h-[32rem] w-full bg-[url('./assets/workspace.webp')] bg-cover`}
             >
                 <div className="absolute top-44 left-10 z-10 w-80 sm:left-40 sm:w-6/12 md:left-56 lg:left-64">
                     <h1 className="text-3xl text-white md:text-4xl lg:text-5xl">
