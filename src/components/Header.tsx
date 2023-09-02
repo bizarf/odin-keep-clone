@@ -47,13 +47,14 @@ const Header = ({
     // useEffect to handle the dark mode toggle option
     useEffect(() => {
         const themeElement =
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            document.querySelector<HTMLElement>(`[data-theme]`)!;
+            document.querySelector<HTMLElement>(`[data-theme]`);
 
-        if (theme === "dark") {
-            themeElement.dataset.theme = "dark";
-        } else {
-            themeElement.dataset.theme = "light";
+        if (themeElement) {
+            if (theme === "dark") {
+                themeElement.dataset.theme = "dark";
+            } else {
+                themeElement.dataset.theme = "light";
+            }
         }
     }, [theme]);
 
@@ -196,13 +197,13 @@ const Header = ({
                             tabIndex={0}
                             className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
                         >
-                            <li className="py-1 px-4 hover:bg-gray-200">
+                            <li className="px-4 py-1 hover:bg-gray-200">
                                 <div className="text-sm">Settings</div>
                             </li>
                             {/* dark mode toggle */}
                             {theme === "light" ? (
                                 <li
-                                    className="py-1 px-4 hover:bg-gray-200"
+                                    className="px-4 py-1 hover:bg-gray-200"
                                     onClick={() => {
                                         localStorage.setItem("theme", "dark");
                                         setTheme("dark");
@@ -214,7 +215,7 @@ const Header = ({
                                 </li>
                             ) : (
                                 <li
-                                    className="py-1 px-4 hover:bg-gray-200"
+                                    className="px-4 py-1 hover:bg-gray-200"
                                     onClick={() => {
                                         localStorage.setItem("theme", "light");
                                         setTheme("light");
@@ -225,16 +226,16 @@ const Header = ({
                                     </div>
                                 </li>
                             )}
-                            <li className="py-1 px-4 hover:bg-gray-200">
+                            <li className="px-4 py-1 hover:bg-gray-200">
                                 <div className="text-sm">Send feedback</div>
                             </li>
-                            <li className="py-1 px-4 hover:bg-gray-200">
+                            <li className="px-4 py-1 hover:bg-gray-200">
                                 <div className="text-sm">Help</div>
                             </li>
-                            <li className="py-1 px-4 hover:bg-gray-200">
+                            <li className="px-4 py-1 hover:bg-gray-200">
                                 <div className="text-sm">App downloads</div>
                             </li>
-                            <li className="py-1 px-4 hover:bg-gray-200">
+                            <li className="px-4 py-1 hover:bg-gray-200">
                                 <div className="text-sm">
                                     Keyboard shortcuts
                                 </div>
@@ -265,7 +266,7 @@ const Header = ({
                             className="dropdown-content w-max cursor-pointer rounded-2xl bg-base-200 py-2 text-left shadow-inner drop-shadow-lg"
                         >
                             <div className="bg-base-100">
-                                <div className="flex items-center py-1 px-4">
+                                <div className="flex items-center px-4 py-1">
                                     <div className="avatar m-2">
                                         <div className="w-16 rounded-full">
                                             {user?.photoURL && (
@@ -283,14 +284,14 @@ const Header = ({
                                     </div>
                                 </div>
                                 <div className="divider m-0"></div>
-                                <li className="py-1 px-4 hover:bg-gray-200">
+                                <li className="px-4 py-1 hover:bg-gray-200">
                                     <div className="text-sm">
                                         Add another account
                                     </div>
                                 </li>
                             </div>
                             <li
-                                className="py-1 px-4 hover:bg-gray-200"
+                                className="px-4 py-1 hover:bg-gray-200"
                                 onClick={googleSignOut}
                             >
                                 <div className="text-sm">Sign out</div>

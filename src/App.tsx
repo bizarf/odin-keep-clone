@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-    HashRouter,
-    createBrowserRouter,
-    createRoutesFromElements,
-} from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import "./App.css";
 import Splash from "./components/Splash";
 import KeepApp from "./components/KeepApp";
@@ -32,7 +25,6 @@ const App = () => {
     return (
         <div>
             {/* <BrowserRouter basename="odin-keep-clone"> */}
-            {/* <BrowserRouter basename={process.env.PUBLIC_URL}> */}
             <HashRouter>
                 <Routes>
                     <Route path="/" element={<Splash setUser={setUser} />} />

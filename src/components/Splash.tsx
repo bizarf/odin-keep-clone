@@ -5,6 +5,7 @@ import {
     GoogleAuthProvider,
     signInWithRedirect,
     getRedirectResult,
+    signInWithPopup,
 } from "firebase/auth";
 import { app } from "./firebaseSetup";
 import { User } from "../App";
@@ -27,26 +28,42 @@ const Splash = ({ setUser }: Props) => {
     const provider = new GoogleAuthProvider();
     const navigate = useNavigate();
 
-    const googleSignInRedirect = () => {
-        // if the user is already logged in, then we will send them to the main app. if not then we run the google sign in with redirect function
+    // this function works on chrome, but not on firefox
+    // const googleSignInRedirect = () => {
+    // if the user is already logged in, then we will send them to the main app. if not then we run the google sign in with redirect function
+    // if (auth.currentUser) {
+    //     navigate("/keep/");
+    // } else {
+    // this custom parameter allows prompt users to select which google account to log into. The account that had logged in previously will auto login if this parameter is not provided.
+    //         provider.setCustomParameters({ prompt: "select_account" });
+    //         signInWithRedirect(auth, provider);
+    //     }
+    // };
+
+    // best sign in method for browsers that block third party cookies
+    const googleSignInPopup = async () => {
         if (auth.currentUser) {
             navigate("/keep/");
         } else {
-            // this custom parameter allows prompt users to select which google account to log into. The account that had logged in previously will auto login if this parameter is not provided.
             provider.setCustomParameters({ prompt: "select_account" });
-            signInWithRedirect(auth, provider);
+            signInWithPopup(auth, provider).then((result) => {
+                if (result) {
+                    setLoadingSpinner((state) => !state);
+                    setTimeout(() => navigate("/keep/"), 1000);
+                }
+            });
         }
     };
 
-    useEffect(() => {
-        // after the redirect sign in happens, the app mounts again so this code section will run. we check with auth to see with there is any result. if there is, then we'll send the user to the app.
-        getRedirectResult(auth).then((result) => {
-            if (result) {
-                setLoadingSpinner((state) => !state);
-                setTimeout(() => navigate("/keep/"), 1000);
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    // after the redirect sign in happens, the app mounts again so this code section will run. we check with auth to see with there is any result. if there is, then we'll send the user to the app.
+    //     getRedirectResult(auth).then((result) => {
+    //         if (result) {
+    //             setLoadingSpinner((state) => !state);
+    //             setTimeout(() => navigate("/keep/"), 1000);
+    //         }
+    //     });
+    // }, []);
 
     const [loadingSpinner, setLoadingSpinner] = useState(false);
 
@@ -73,22 +90,22 @@ const Splash = ({ setUser }: Props) => {
     return (
         <div>
             <header className="sticky top-0 z-20 flex justify-between">
-                <div className="relative top-2 left-4 text-3xl text-white">
+                <div className="relative left-4 top-2 text-3xl text-white">
                     Keep Clone
                 </div>
                 <Link to={"https://github.com/bizarf"}>
                     <GoMarkGithub
-                        className="relative top-2 right-4 text-3xl text-white"
+                        className="relative right-4 top-2 text-3xl text-white"
                         aria-hidden
                         focusable
                     />
-                    <span className="sr-only">Bizarf's Github page</span>
+                    <span className="sr-only">Bizarf&apos;s Github page</span>
                 </Link>
             </header>
             <section
                 className={`relative -mt-12 h-[32rem] w-full bg-[url('./assets/workspace.webp')] bg-cover`}
             >
-                <div className="absolute top-44 left-10 z-10 w-80 sm:left-40 sm:w-6/12 md:left-56 lg:left-64">
+                <div className="absolute left-10 top-44 z-10 w-80 sm:left-40 sm:w-6/12 md:left-56 lg:left-64">
                     <h1 className="text-3xl text-white md:text-4xl lg:text-5xl">
                         Save your thoughts, wherever you are
                     </h1>
@@ -101,7 +118,7 @@ const Splash = ({ setUser }: Props) => {
                         </button>
                         <button
                             className="btn rounded-sm border-0 !bg-blue-600 !text-white shadow-sm shadow-black"
-                            onClick={googleSignInRedirect}
+                            onClick={googleSignInPopup}
                         >
                             Google sign in
                         </button>
@@ -256,7 +273,7 @@ const Splash = ({ setUser }: Props) => {
                 </div>
             </section>
             {loadingSpinner && (
-                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-20">
+                <div className="fixed bottom-0 left-0 right-0 top-0 flex items-center justify-center bg-black bg-opacity-20">
                     <div className="lds-dual-ring"></div>
                 </div>
             )}
