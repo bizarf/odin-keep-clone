@@ -10,7 +10,7 @@ import {
 import { app } from "./firebaseSetup";
 import { User } from "../App";
 // import workspaceImage from "../assets/workspace.jpg";
-import { GoMarkGithub } from "react-icons/go";
+import { FaGithub } from "react-icons/fa";
 import keepCloneNoteScreenshot from "../assets/keep-clone-note.webp";
 import keepCloneComposerScreenshot from "../assets/keep-clone-note-composer.webp";
 import keepCloneEditorScreenshot from "../assets/keep-clone-note-editor.webp";
@@ -94,7 +94,7 @@ const Splash = ({ setUser }: Props) => {
                     Keep Clone
                 </div>
                 <Link to={"https://github.com/bizarf"}>
-                    <GoMarkGithub
+                    <FaGithub
                         className="relative right-4 top-2 text-3xl text-white"
                         aria-hidden
                         focusable

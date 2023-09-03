@@ -146,7 +146,7 @@ const Trash = ({ notes, setNotes, gridView, mainMenuOpen }: Props) => {
                                 aria-hidden
                             />
                         </div>
-                        <div className="text-xl">No notes in Trash</div>
+                        <h1 className="text-xl">No notes in Trash</h1>
                     </div>
                 </div>
             )}

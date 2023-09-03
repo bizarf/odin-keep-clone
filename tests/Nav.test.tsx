@@ -1,12 +1,13 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React, { useState } from "react";
-import { describe, expect, it } from "vitest";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import React from "react";
+import { describe, expect, it, vi } from "vitest";
+import { HashRouter } from "react-router-dom";
 import Nav from "../src/components/Nav";
 import KeepApp from "../src/components/KeepApp";
+import "./setup";
 
-const user = {
+const mockUser = {
     displayName: "Test",
     email: "test@test.com",
     emailVerified: true,
@@ -23,46 +24,88 @@ const user = {
 
 describe("Nav tabs render", () => {
     it("Notes tab should be rendered", () => {
-        render(<Nav mainMenuOpen={true} />, { wrapper: HashRouter });
+        render(<Nav mainMenuOpen={true} theme={""} />, { wrapper: HashRouter });
         const noteEl = screen.getByText("Notes");
+        expect(noteEl).toBeVisible();
         expect(noteEl).toBeInTheDocument();
     });
 
     it("Reminders tab should be rendered", () => {
-        render(<Nav mainMenuOpen={true} />, { wrapper: HashRouter });
+        render(<Nav mainMenuOpen={true} theme={""} />, { wrapper: HashRouter });
         const remindersEl = screen.getByText("Reminders");
+        expect(remindersEl).toBeVisible;
         expect(remindersEl).toBeInTheDocument();
     });
 });
 
 describe("tabs go to their respective pages", () => {
-    it("clicking the notes tab opens the notes page", async () => {
-        render(<KeepApp user={user} setUser={undefined} />, {
-            wrapper: BrowserRouter,
+    it("clicking the reminders tab opens the reminders page", async () => {
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
         });
-        const userTest = userEvent.setup();
-        const composerPlaceholder = screen.getByText("Take a note...");
-        await waitFor(() => userTest.click(composerPlaceholder));
-        const textarea = screen.getByPlaceholderText("Take a note...");
-        await waitFor(() => userTest.type(textarea, "This is a test note"));
-        await waitFor(() => userTest.click(screen.getByText("Close")));
-        const remindersEl = screen.getByText("Reminders");
-        await waitFor(() => userTest.click(remindersEl));
-        const noteEl = screen.getByText("Notes");
-        await waitFor(() => userTest.click(noteEl));
-        expect(screen.getByText("This is a test note")).toBeInTheDocument();
+
+        const user = userEvent.setup();
+        const remindersTab = screen.getByRole("button", { name: "Reminders" });
+        await user.click(remindersTab);
+        const remindersHeader = screen.getByRole("heading", {
+            name: "Notes with upcoming reminders appear here",
+        });
+        expect(remindersHeader).toBeInTheDocument();
+        expect(remindersHeader).toBeVisible();
+    });
+
+    it("clicking the notes tab navigates to the notes page from the reminders page", async () => {
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
+        });
+
+        const user = userEvent.setup();
+        const remindersTab = screen.getByRole("button", { name: "Reminders" });
+        await user.click(remindersTab);
+        const remindersHeader = screen.getByRole("heading", {
+            name: "Notes with upcoming reminders appear here",
+        });
+        expect(remindersHeader).toBeInTheDocument();
+
+        const notesTab = screen.getByRole("button", { name: "Notes" });
+        await user.click(notesTab);
+        const notePlaceHolder = screen.getByText("Take a note...");
+        expect(notePlaceHolder).toBeInTheDocument();
+        expect(notePlaceHolder).toBeVisible();
+    });
+
+    it("clicking the archive tab opens the archive page", async () => {
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
+        });
+
+        const user = userEvent.setup();
+        const archiveTab = screen.getByRole("button", { name: "Archive" });
+        await user.click(archiveTab);
+        const archiveHeader = screen.getByRole("heading", {
+            name: "Your archived notes appear here",
+        });
+        expect(archiveHeader).toBeInTheDocument();
+        expect(archiveHeader).toBeVisible();
     });
 
     it("clicking the trash tab opens the trash page", async () => {
-        render(<KeepApp user={user} setUser={undefined} />, {
-            wrapper: BrowserRouter,
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
         });
-        const userTest = userEvent.setup();
-        const trashEl = screen.getByText("Trash");
-        await userTest.click(trashEl);
-        const trashText = screen.getByText(
+
+        const user = userEvent.setup();
+        const trashTab = screen.getByRole("button", { name: "Trash" });
+        await user.click(trashTab);
+        const trashHeader = screen.getByRole("heading", {
+            name: "No notes in Trash",
+        });
+        const trashSevenDaysNote = screen.getByText(
             "Notes in Trash are deleted after 7 days."
         );
-        expect(trashText).toBeInTheDocument();
+        expect(trashHeader).toBeInTheDocument();
+        expect(trashHeader).toBeVisible();
+        expect(trashSevenDaysNote).toBeInTheDocument();
+        expect(trashSevenDaysNote).toBeVisible();
     });
 });

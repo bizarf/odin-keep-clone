@@ -117,12 +117,12 @@ const Archive = ({
                         <div>
                             <MdOutlineArchive
                                 className="text-9xl text-slate-200"
-                                aria-aria-hidden
+                                aria-hidden
                             />
                         </div>
-                        <div className="text-xl">
+                        <h1 className="text-xl">
                             Your archived notes appear here
-                        </div>
+                        </h1>
                     </div>
                 </div>
             )}

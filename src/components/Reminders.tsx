@@ -37,9 +37,9 @@ const Reminders = ({
                         <div>
                             <MdNotificationsNone className="text-9xl text-slate-200" />
                         </div>
-                        <div className="text-xl">
+                        <h1 className="text-xl">
                             Notes with upcoming reminders appear here
-                        </div>
+                        </h1>
                     </div>
                 </div>
             )}

@@ -1,7 +1,8 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`note adding > if the title and textcontent are empty, then the note won't be added 1`] = `
 <KeepApp
+  setUser={[MockFunction spy]}
   user={
     {
       "displayName": "Test",

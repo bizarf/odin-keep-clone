@@ -1,12 +1,12 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { describe, expect, it } from "vitest";
-import { BrowserRouter, HashRouter } from "react-router-dom";
+import { describe, expect, it, vi } from "vitest";
+import { HashRouter } from "react-router-dom";
 import KeepApp from "../src/components/KeepApp";
-import App from "../src/App";
+import App, { User } from "../src/App";
 
-const user = {
+const mockUser = {
     displayName: "Test",
     email: "test@test.com",
     emailVerified: true,
@@ -23,51 +23,52 @@ const user = {
 
 describe("note adding", () => {
     it("check if note composer has rendered on the note page", async () => {
-        render(<KeepApp user={user} setUser={undefined} />, {
-            wrapper: BrowserRouter,
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
         });
         const composerPlaceholder = screen.getByText("Take a note...");
         expect(composerPlaceholder).toBeInTheDocument();
     });
 
-    // it("user successfully adds a note", async () => {
-    //     const user = userEvent.setup();
-    //     render(<KeepApp user={user} setUser={undefined} />, {
-    //         wrapper: BrowserRouter,
-    //     });
-    //     const notesTab = screen.getByText("Notes");
-    //     await user.click(notesTab);
-    //     const composerPlaceholder = screen.getByText("Take a note...");
-    //     await user.click(composerPlaceholder);
-    //     const textarea = screen.getByPlaceholderText("Take a note...");
-    //     await user.type(textarea, "This is a test note");
-    //     await user.click(screen.getByText("Close"));
-    //     expect(screen.getByText("This is a test note")).toBeInTheDocument();
-    // });
+    it("user successfully adds a note", async () => {
+        const user = userEvent.setup();
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
+        });
+        const notesTab = screen.getByText("Notes");
+        await user.click(notesTab);
+        const composerPlaceholder = screen.getByText("Take a note...");
+        await user.click(composerPlaceholder);
+        const textarea = screen.getByPlaceholderText("Take a note...");
+        await user.type(textarea, "This is a test note");
+        await user.click(screen.getByText("Close"));
+        expect(screen.getByText("This is a test note")).toBeInTheDocument();
+    });
 
     it("if the title and textcontent are empty, then the note won't be added", async () => {
         const user = userEvent.setup();
-        render(<KeepApp user={user} setUser={undefined} />, {
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
             wrapper: HashRouter,
         });
         const composerPlaceholder = screen.getByText("Take a note...");
         await user.click(composerPlaceholder);
         await user.click(screen.getByRole("button", { name: "Close" }));
-        expect(<KeepApp user={user} setUser={undefined} />).toMatchSnapshot();
+        expect(<KeepApp user={mockUser} setUser={vi.fn()} />).toMatchSnapshot();
     });
 
-    // it("the note will be posted if the title has text, but the textcontent is empty", async () => {
-    //     render(<KeepApp user={user} setUser={undefined} />, {
-    //         wrapper: BrowserRouter,
-    //     });
-    //     const composerPlaceholder = screen.getByText("Take a note...");
-    //     userEvent.click(composerPlaceholder);
-    //     const titlePlaceholder = screen.getByPlaceholderText("Title");
-    //     userEvent.click(titlePlaceholder);
-    //     userEvent.type(titlePlaceholder, "This is a test title");
-    //     userEvent.click(screen.getByText("Close"));
-    //     expect(screen.getByText("This is a test title")).toBeInTheDocument();
-    // });
+    it("the note will be posted if the title has text, but the textcontent is empty", async () => {
+        const user = userEvent.setup();
+        render(<KeepApp user={mockUser} setUser={vi.fn()} />, {
+            wrapper: HashRouter,
+        });
+        const composerPlaceholder = screen.getByText("Take a note...");
+        await user.click(composerPlaceholder);
+        const titlePlaceholder = screen.getByPlaceholderText("Title");
+        await user.click(titlePlaceholder);
+        await user.type(titlePlaceholder, "This is a test title");
+        await user.click(screen.getByText("Close"));
+        expect(screen.getByText("This is a test title")).toBeInTheDocument();
+    });
 
     // it("the note will be posted if the textcontent has text, but the title is empty", async () => {
     //     render(<KeepApp user={user} setUser={undefined} />, {
