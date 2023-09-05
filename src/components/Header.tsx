@@ -251,7 +251,10 @@ const Header = ({
                         ${user?.email}`}
                 >
                     <div className="dropdown-end dropdown px-4">
-                        <button className="btn-sm btn-circle btn mt-1 border-none bg-inherit">
+                        <button
+                            className="btn-sm btn-circle btn mt-1 border-none bg-inherit"
+                            aria-label="user account control"
+                        >
                             {user?.photoURL && (
                                 <img
                                     src={user?.photoURL}
@@ -294,7 +297,7 @@ const Header = ({
                                 className="px-4 py-1 hover:bg-gray-200"
                                 onClick={googleSignOut}
                             >
-                                <div className="text-sm">Sign out</div>
+                                <button className="text-sm">Sign out</button>
                             </li>
                         </ul>
                     </div>

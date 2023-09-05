@@ -119,7 +119,6 @@ const NoteEditor = ({
                         id="noteTitleEdit"
                         value={currentNote?.title}
                         onChange={editTitle}
-                        // aria-label="Note Title"
                     />
                     <div
                         className="tooltip tooltip-bottom [--tooltip-tail:0px] before:text-xs"

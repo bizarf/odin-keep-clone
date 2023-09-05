@@ -144,6 +144,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                     <button
                         className="btn-sm btn-circle btn border-none bg-inherit "
                         onClick={() => moveToArchive(index)}
+                        aria-label="archive button"
                     >
                         <MdOutlineArchive
                             className="text-lg"
@@ -159,12 +160,13 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                 data-tip="More"
             >
                 <div className="dropdown-end dropdown">
-                    <label
+                    <button
                         tabIndex={0}
                         className=" btn-sm btn-circle btn border-none bg-inherit"
+                        aria-label="note more options"
                     >
                         <MdOutlineMoreVert className="text-lg" />
-                    </label>
+                    </button>
                     <ul
                         tabIndex={0}
                         className="dropdown-content w-max cursor-pointer bg-base-100 py-2 text-left shadow-inner drop-shadow-lg"
@@ -173,7 +175,7 @@ const NoteControls = ({ index, notes, setNotes }: Props) => {
                             className="py-1 px-4 hover:bg-gray-200"
                             onClick={() => moveToTrash(index)}
                         >
-                            <div className="text-sm">Delete note</div>
+                            <button className="text-sm">Delete note</button>
                         </li>
                         <li className="py-1 px-4 hover:bg-gray-200">
                             <div className="text-sm">Add label</div>
